@@ -18,7 +18,7 @@ namespace BeekeeperBackend.Controllers
     // TODO: Refactor and enhance auth controller
     // TODO: Implement roles
     
-    [Route("api/[controller]")]
+    [Route("api/auth")]
     [ApiController]
     public class AuthController : ControllerBase
     {
