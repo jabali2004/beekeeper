@@ -1,16 +1,18 @@
 ﻿using System;
+using BeekeeperBackend.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 
 #nullable disable
 
 namespace BeekeeperBackend
 {
-    public partial class BeekeeperContext : DbContext
+    public class BeekeeperContext : IdentityDbContext<ApplicationUser>
     {
         public BeekeeperContext()
         {
         }
+
 
         public BeekeeperContext(DbContextOptions<BeekeeperContext> options)
             : base(options)
@@ -21,9 +23,7 @@ namespace BeekeeperBackend
         {
             modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
 
-            OnModelCreatingPartial(modelBuilder);
+            base.OnModelCreating(modelBuilder);
         }
-
-        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }
 }
