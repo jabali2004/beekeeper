@@ -22,7 +22,7 @@ const routes: Routes = [
   // },
   {
     path: '**',
-    redirectTo: 'info'
+    redirectTo: 'pages'
   }
 ];
 

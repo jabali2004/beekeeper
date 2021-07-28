@@ -7,10 +7,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Home',
     data: {
-      translation: 'pages.home.home'
+      translation: 'pages.home.title'
     },
     icon: 'home-outline',
-    link: '/pages/home',
+    link: '/pages',
     home: true,
     hidden: false
   }

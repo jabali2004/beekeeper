@@ -25,18 +25,14 @@ export class PagesComponent implements OnInit {
   public href = '';
 
   constructor(
-    // private authService: AuthService,
     private router: Router,
     private route: ActivatedRoute,
     private translateService: TranslateService
   ) {
+    this.translateService.instant('pages.home.title');
+
     router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        if (event.url === '/pages/home' || event.url === '/pages/profile') {
-          this.updateMenuHiddenState(true);
-        } else {
-          this.updateMenuHiddenState(false);
-        }
       }
     });
   }
@@ -44,11 +40,6 @@ export class PagesComponent implements OnInit {
   ngOnInit(): void {
     this.href = this.router.url;
     this.menu = MENU_ITEMS;
-
-    // href prüfen und visibility von Menüpunkten schalten
-    if (this.href === '/pages/home' || this.href === '/pages/profile') {
-      this.updateMenuHiddenState(true);
-    }
 
     this.translateService.onLangChange.subscribe((event) =>
       this.translateMenuItems()

@@ -1,5 +1,15 @@
 {
-  "footer": {},
-  "header": {},
+  "footer": {
+    "copyright": ""
+  },
+  "header": {
+    "login": "Anmelden",
+    "register": "Registrieren"
+  },
+  "pages": {
+    "home": {
+      "title": "Home"
+    }
+  },
   "title": "Beekeeper"
 }
