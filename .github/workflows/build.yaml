@@ -42,5 +42,5 @@ jobs:
       # run: cd BeekeeperFrontend && npm run openapilocal
       - name: Lint project
         run: cd BeekeeperFrontend && ng lint
-      - name: Build showcase
+      - name: Build project
         run: cd BeekeeperFrontend && ng build
