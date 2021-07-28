@@ -47,7 +47,7 @@ export function createTranslateLoader(http: HttpClient) {
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    NbThemeModule.forRoot({ name: 'default' }),
+    NbThemeModule.forRoot({ name: 'dark' }),
     CoreModule.forRoot(),
     ThemeModule.forRoot(),
     NbSidebarModule.forRoot(),

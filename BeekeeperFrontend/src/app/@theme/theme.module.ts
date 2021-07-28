@@ -13,8 +13,6 @@ import {
   NbIconModule,
   NbThemeModule,
   DEFAULT_THEME,
-  COSMIC_THEME,
-  CORPORATE_THEME,
   DARK_THEME
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
@@ -85,9 +83,9 @@ export class ThemeModule {
       providers: [
         ...NbThemeModule.forRoot(
           {
-            name: 'default'
+            name: 'dark'
           },
-          [DEFAULT_THEME, COSMIC_THEME, CORPORATE_THEME, DARK_THEME]
+          [DEFAULT_THEME, DARK_THEME]
         ).providers
       ]
     } as ModuleWithProviders<ThemeModule>;
