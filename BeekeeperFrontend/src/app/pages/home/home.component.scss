@@ -1,0 +1,94 @@
+@import '../../../themes';
+
+.step-container{
+  input{
+    margin: 0 0 16px;
+    min-width: 400px;
+  }
+
+  textarea{
+    margin: 0 0 16px;
+    min-height: 200px;
+  }
+
+  button{
+    margin: 0 8px;
+  }
+  
+  .subtitle{
+    color: nb-theme(color-primary-default);
+    font-weight: bold;
+  }
+} 
+
+@media screen and (max-width: 576px){
+
+    .step-container{
+      input{
+        min-width: 300px;
+      }
+    }
+  
+}
+
+@media screen and (max-width: 380px){
+  .previous-Button{
+    margin-bottom: 16px !important;
+  }
+}
+
+.home-body{
+  .body-header{
+    padding: 0 0 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+  
+    h1{
+      margin: 0 30px 0 0px;
+    }
+    
+    .search{
+      display: flex;
+      flex-direction: row;
+
+      button{
+        margin-right: 30px;
+        display: block;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px){
+  .home-body{
+    .body-header{
+      flex-direction: column;
+      justify-content: flex-start;
+
+      h1{
+        margin-bottom: 10px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 576px){
+  .home-body{
+    .body-header{
+      padding: 0 0 10px;
+
+      .search{
+        flex-direction: column;
+        justify-content: flex-start;
+        align-self: flex-start;
+
+        button{
+          align-self: flex-start;
+          margin: 0 0 10px;
+        }
+      }
+    }
+  }
+}
+

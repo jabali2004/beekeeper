@@ -1,0 +1,36 @@
+<div class="header-container d-inline-flex">
+  <div class="logo-container d-flex">
+    <a *ngIf="useSidebar" (click)="toggleSidebar()" href="#" class="sidebar-toggle">
+      <nb-icon icon="menu-2-outline"></nb-icon>
+    </a>
+    <a class="logo" [ngClass]="{'logo-border': useSidebar}" (click)="navigateHome()"><span>Beekeeper</span></a>
+  </div>
+  <!-- <div class="d-flex">
+    <nb-select [selected]="currentTheme" (selectedChange)="changeTheme($event)" status="primary">
+      <nb-option *ngFor="let theme of themes" [value]="theme.value"> {{ theme.name }}</nb-option>
+    </nb-select>
+  </div> -->
+</div>
+
+
+<div class="header-container d-flex flex-row">
+  <nb-actions size="small" class="auth-buttons-responsive">
+    <nb-action *ngIf="!isAuthenticated" [nbContextMenu]="headerMenu">
+      <nb-icon icon="log-in-outline"></nb-icon>
+    </nb-action>
+  </nb-actions>
+
+  <nb-actions size="small">
+    <!-- <nb-action class="user-action" *ngIf="isAuthenticated">
+      <nb-user [nbContextMenu]="userMenu" [picture]="profileImage ? profileImage : ''" [onlyPicture]="true"
+        [name]="user ? user.username : ''">
+      </nb-user>
+    </nb-action> -->
+
+    <nb-action *ngIf="!isAuthenticated" class="auth-buttons">
+      <button nbButton ghost status="basic" (click)="loginClick()"
+        class="LoginButton">{{ 'header.login' | translate }}</button>
+      <button nbButton status="basic" (click)="registerClick()">{{ 'header.register' | translate }}</button>
+    </nb-action>
+  </nb-actions>
+</div>

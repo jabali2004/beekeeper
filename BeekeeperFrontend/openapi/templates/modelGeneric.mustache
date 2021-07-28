@@ -1,0 +1,144 @@
+{{! when thre is no parent, we extend from our own BaseModel }}
+/*
+https://github.com/swagger-api/swagger-codegen/wiki/Mustache-Template-Variables
+*/
+{{^parent}}import { BaseModel } from '../variables';{{/parent}}
+
+/**
+ * Generated Model Interface for Model "{{classname}}"
+ *
+ */
+export interface I{{classname}} {
+{{>modelGenericAdditionalProperties}}
+{{#vars}}
+    {{#description}}
+    /**
+     * {{{description}}}
+     *
+     */
+    {{/description}}
+    {{#isReadOnly}}readonly {{/isReadOnly}}{{name}}{{^required}}?{{/required}}: {{#isEnum}}{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{datatype}}}{{/isEnum}};
+{{/vars}}
+}
+/**
+ * Generated Model Class for Model "{{classname}}"
+ *
+ */
+export class {{classname}} {{#parent}}extends {{{parent}}} {{/parent}}{{^parent}}extends BaseModel {{/parent}}implements I{{classname}} {
+    public  static readonly MODEL  = '{{classname}}';
+    public                  MODEL  = '{{classname}}';
+
+{{>modelGenericAdditionalProperties}}
+{{#vars}}
+    {{#description}}
+    /**
+     * {{{description}}}
+     */
+    {{/description}}
+    public {{#isReadOnly}}readonly {{/isReadOnly}}{{name}}{{^required}}?{{/required}}: {{#isEnum}}{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{datatype}}}{{/isEnum}};
+{{/vars}}
+
+
+    /**
+     * constructor
+     * @param values Can be used to set a webapi response or formValues to this newly constructed model
+     * @useFormGroupValuesToModel if true use formValues
+    */
+    constructor(values?: any, useFormGroupValuesToModel = false) {
+       super();
+
+        if (values) {
+            this.setValues(values, useFormGroupValuesToModel);
+        }
+
+        // define non enumerable properties so these are omitted in JSON.stringify.
+        Object.defineProperty(this, 'MODEL', {
+            enumerable: false,
+            writable: false
+        });
+    }
+
+
+    /**
+     * set the values.
+     * @param values Can be used to set a webapi response to this newly constructed model
+     */
+    public setValues(values: any, useFormGroupValuesToModel = false): void {
+        if (values) {
+            const rawValues = this.getValuesToUse(values, useFormGroupValuesToModel);
+{{#allVars}}{{^isReadOnly}}{{#isPrimitiveType}}
+            this.{{name}} = this.castTo('{{{datatype}}}', rawValues.{{name}});
+{{/isPrimitiveType}}{{^isPrimitiveType}}{{#isContainer}}            this.{{name}} = rawValues.{{name}} ? rawValues.{{name}}
+                    .map(_ => {
+                        return {{{complexType}}} && {{{complexType}}}['prototype']
+                            ? ( _ ? Reflect.construct(<any>{{{complexType}}}, [_]) : Reflect.construct(<any>{{{complexType}}}, []) )
+                            : _ ;
+                    }) : null;
+{{/isContainer}}{{^isContainer}}{{#allowableValues}}        this.{{name}} = rawValues.{{name}};{{/allowableValues}}{{^allowableValues}}{{!
+        Es soll immer ein Objekt erstellt werden, auch wenn aktuell keine Daten aus der API vorhanden sind, aber evtl
+        welche über ein Formular hinzugefügt werden sollen?
+        ! }}            if ({{{complexType}}} && {{{complexType}}}['prototype']) {
+                this.{{name}} = rawValues.{{name}} ? Reflect.construct(<any>{{{complexType}}}, [rawValues.{{name}}]) : Reflect.construct(<any>{{{complexType}}}, []);
+            }
+            else {
+                this.{{name}} = rawValues.{{name}};
+            }
+{{/allowableValues}}{{/isContainer}}{{/isPrimitiveType}}{{/isReadOnly}}{{/allVars}}
+            // set values in model properties for added formControls
+            super.setValuesInAddedPropertiesOfAttachedFormControls(values, useFormGroupValuesToModel);
+        }
+    }
+
+    /**
+     * returns the FormGroup of that model
+     */
+    public getFormGroup(): FormGroup {
+        if (!this._formGroup) {
+            this._formGroup = new FormGroup( {
+{{#allVars}}{{^isReadOnly}}{{#isPrimitiveType}}{{#isContainer}}
+            // {{name}}: new FormArray(this.{{name}} ? this.{{name}}.map(_ => new FormControl(_, [{{#required}}Validators.required{{/required}}])) : []),
+            {{name}}: new FormControl(this.{{name}}, [{{#required}}Validators.required{{/required}}] ),
+{{/isContainer}}{{^isContainer}}            {{name}}: new FormControl(this.{{name}}, [{{#required}}Validators.required{{/required}}] ),
+{{/isContainer}}{{/isPrimitiveType}}{{^isPrimitiveType}}{{#isContainer}}            {{name}}: new FormArray(this.{{name}} ? this.{{name}}
+                .map(_ => {
+                    return _ && _['getFormGroup'] ? _['getFormGroup']() : new FormControl(_, [])
+                }) : []),
+            // {{name}}: new FormControl(this.{{name}}, [{{#required}}Validators.required{{/required}}] ),
+{{/isContainer}}{{^isContainer}}{{#allowableValues}}            {{name}}: new FormControl(this.{{name}}, [{{#required}}Validators.required{{/required}}] ),{{/allowableValues}}{{! Es soll immer ein FormGroup zurückgegeben/erzeugt werden, da zwar aktuell keine Daten aus der API vorhanden sind, aber evtl
+    welche über ein Formular hinzugefügt werden sollen?!
+    Wenn gar keine Instanz des entsprechenden Objektes/Attributs vorhanden ist: dann liefer eine leeres FormControl zurück
+    (erstmal nur als Platzhalter, damit keine Fehlermeldung geworfen werden) }}{{^allowableValues}}            {{name}}: this.{{name}} && this.{{name}}['getFormGroup'] ? this.{{name}}['getFormGroup']() : new FormControl(this.{{name}}, []) ,{{/allowableValues}}
+{{/isContainer}}{{/isPrimitiveType}}{{/isReadOnly}}{{/allVars}}
+            });
+        }
+        return this._formGroup;
+    }
+
+    /**
+     * set the FormGroup values to the model values.
+    */
+    public setFormGroupValues() {
+        {{#allVars}}
+        {{^isReadOnly}}
+        this.$formGroup.controls['{{name}}'].setValue(this.{{name}});
+        {{/isReadOnly}}
+        {{/allVars}}
+
+        // set formValues in added formControls
+        super.setFormGroupValuesInAddedFormControls();
+    }
+
+    /**
+     * checks, if attribute is required for this model
+     */
+    public isRequired(attribute: string): boolean {
+        switch (attribute) {
+            {{#allVars}}
+            case '{{name}}': return {{#required}}true{{/required}}{{^required}}false{{/required}};
+            {{/allVars}}
+            default: return false;
+        }
+    }
+}
+
+{{>modelGenericEnums}}

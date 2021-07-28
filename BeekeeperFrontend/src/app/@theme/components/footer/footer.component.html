@@ -1,0 +1,11 @@
+<div class="row col-12 justify-content-between">
+  <nb-select placeholder="Language" size="small" [(ngModel)]="selectedLanguageItem"
+    (selectedChange)="changeLanguage($event)">
+    <nb-option value="de-DE">Deutsch</nb-option>
+    <nb-option value="en">English</nb-option>
+  </nb-select>
+
+  <div class="links">
+    <!-- <span class="copyright">{{ 'footer.copyright' | translate }}</span> -->
+  </div>
+</div>
