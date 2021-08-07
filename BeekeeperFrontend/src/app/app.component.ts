@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  template: '<ng-scrollbar><router-outlet></router-outlet><ng-scrollbar>'
+  template: '<router-outlet></router-outlet>'
 })
 export class AppComponent implements OnDestroy, OnInit {
   constructor(

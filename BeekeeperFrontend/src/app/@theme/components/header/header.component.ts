@@ -39,14 +39,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     {
       value: 'dark',
       name: 'Dark'
-    },
-    {
-      value: 'cosmic',
-      name: 'Cosmic'
-    },
-    {
-      value: 'corporate',
-      name: 'Corporate'
     }
   ];
 
@@ -89,10 +81,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.translate.instant('header.login');
     this.translate.instant('header.register');
 
-    // const savedTheme = localStorage.getItem('theme');
-    // if (savedTheme) {
-    //   this.themeService.changeTheme(savedTheme);
-    // }
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      this.themeService.changeTheme(savedTheme);
+    }
 
     this.currentTheme = this.themeService.currentTheme;
 
@@ -122,16 +114,16 @@ export class HeaderComponent implements OnInit, OnDestroy {
         (isLessThanXl: boolean) => (this.userPictureOnly = isLessThanXl)
       );
 
-    // this.themeService
-    //   .onThemeChange()
-    //   .pipe(
-    //     map(({ name }) => name),
-    //     takeUntil(this.destroy$)
-    //   )
-    //   .subscribe((themeName: string) => {
-    //     this.currentTheme = themeName;
-    //     localStorage.setItem('theme', themeName);
-    //   });
+    this.themeService
+      .onThemeChange()
+      .pipe(
+        map(({ name }) => name),
+        takeUntil(this.destroy$)
+      )
+      .subscribe((themeName: string) => {
+        this.currentTheme = themeName;
+        localStorage.setItem('theme', themeName);
+      });
 
     this.menuService.onItemClick().subscribe((bag: NbMenuBag) => {
       if (bag.item.data) {
