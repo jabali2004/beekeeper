@@ -120,8 +120,6 @@ namespace BeekeeperBackend
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseStatusCodePages();
-
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
 
             // InitializeDatabase(app);
