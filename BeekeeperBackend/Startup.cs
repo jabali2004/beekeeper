@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using System.Reflection;
 using System.Text;
 using BeekeeperBackend.Data;
 using BeekeeperBackend.Models;
@@ -33,7 +36,35 @@ namespace BeekeeperBackend
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo {Title = "BeekeeperBackend", Version = "v1"});
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "BeekeeperBackend", Version = "v1" });
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Description = @"JWT Authorization header using the Bearer scheme. \r\n\r\n 
+                      Enter 'Bearer' [space] and then your token in the text input below.
+                      \r\n\r\nExample: 'Bearer 12345abcdef'",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "Bearer"
+                });
+
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement()
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            },
+                            Scheme = "oauth2",
+                            Name = "Bearer",
+                            In = ParameterLocation.Header,
+                        },
+                        new List<string>()
+                    }
+                });
             });
 
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
@@ -48,24 +79,28 @@ namespace BeekeeperBackend
                 }).AddEntityFrameworkStores<BeekeeperContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(options =>
-            {
-                options.SaveToken = true;
-                options.RequireHttpsMetadata = false;
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidAudience = Configuration["JWT:ValidAudience"],
-                    ValidIssuer = Configuration["JWT:ValidIssuer"],
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:Secret"]))
-                };
-            });
+            // Adding Authentication  
+            services.AddAuthentication(options =>  
+                {  
+                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;  
+                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;  
+                    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;  
+                })  
+  
+                // Adding Jwt Bearer  
+                .AddJwtBearer(options =>  
+                {  
+                    options.SaveToken = true;  
+                    options.RequireHttpsMetadata = false;  
+                    options.TokenValidationParameters = new TokenValidationParameters()  
+                    {  
+                        ValidateIssuer = true,  
+                        ValidateAudience = true,  
+                        ValidAudience = Configuration["JWT:ValidAudience"],  
+                        ValidIssuer = Configuration["JWT:ValidIssuer"],  
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:Secret"]))  
+                    };  
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -77,13 +112,15 @@ namespace BeekeeperBackend
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "BeekeeperBackend v1"));
             }
-
-            app.UseHttpsRedirection();
+            
+            // app.UseHttpsRedirection();
 
             app.UseRouting();
 
-            app.UseAuthorization();
             app.UseAuthentication();
+            app.UseAuthorization();
+
+            app.UseStatusCodePages();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
 
