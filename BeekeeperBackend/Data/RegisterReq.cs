@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BeekeeperBackend.Data
 {
-    public class Register
+    public class RegisterReq
     {
         [Required(ErrorMessage = "User Name is required")]
         public string Username { get; set; }

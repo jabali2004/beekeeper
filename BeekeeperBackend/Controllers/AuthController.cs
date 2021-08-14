@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using System.Linq;
 using System.Threading.Tasks;
 using BeekeeperBackend.Models;
 using BeekeeperBackend.Data;
@@ -11,13 +12,16 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authorization;
+using AutoMapper;
 
 namespace BeekeeperBackend.Controllers
 {
-    
+
     // TODO: Refactor and enhance auth controller
     // TODO: Implement roles
-    
+
+    [Authorize]
     [Route("api/auth")]
     [ApiController]
     public class AuthController : ControllerBase
@@ -25,18 +29,24 @@ namespace BeekeeperBackend.Controllers
         private readonly IConfiguration _configuration;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly BeekeeperContext _context;
+        private readonly IMapper _mapper;
 
-        public AuthController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager,
-            IConfiguration configuration)
+        public AuthController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, BeekeeperContext beekeeperContext,
+            IConfiguration configuration, IMapper mapper
+            )
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _configuration = configuration;
+            _context = beekeeperContext;
+            _mapper = mapper;
         }
 
+        [AllowAnonymous]
         [HttpPost]
         [Route("login")]
-        public async Task<IActionResult> Login([FromBody] Login model)
+        public async Task<IActionResult> Login([FromBody] LoginReq model)
         {
             var user = await _userManager.FindByNameAsync(model.Username);
             if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
@@ -45,8 +55,8 @@ namespace BeekeeperBackend.Controllers
 
                 var authClaims = new List<Claim>
                 {
-                    new(ClaimTypes.Name, user.UserName),
-                    new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+                    new Claim(ClaimTypes.Name, user.UserName),
+                    new Claim(ClaimTypes.NameIdentifier, user.Id),
                 };
 
                 // foreach (var userRole in userRoles) authClaims.Add(new Claim(ClaimTypes.Role, userRole));
@@ -54,12 +64,12 @@ namespace BeekeeperBackend.Controllers
                 var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
 
                 var token = new JwtSecurityToken(
-                    _configuration["JWT:ValidIssuer"],
-                    _configuration["JWT:ValidAudience"],
-                    expires: DateTime.Now.AddHours(3),
-                    claims: authClaims,
-                    signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
-                );
+                         issuer: _configuration["JWT:ValidIssuer"],
+                         audience: _configuration["JWT:ValidAudience"],
+                         expires: DateTime.Now.AddHours(3),
+                         claims: authClaims,
+                         signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
+                         );
 
                 return Ok(
                     new
@@ -73,9 +83,10 @@ namespace BeekeeperBackend.Controllers
             return Unauthorized();
         }
 
+        [AllowAnonymous]
         [HttpPost]
         [Route("register")]
-        public async Task<IActionResult> Register([FromBody] Register model)
+        public async Task<IActionResult> Register([FromBody] RegisterReq model)
         {
             var userExists = await _userManager.FindByNameAsync(model.Username);
             if (userExists != null)
@@ -118,6 +129,16 @@ namespace BeekeeperBackend.Controllers
                     Message = "User created successfully!"
                 }
             );
+        }
+
+        [HttpGet]
+        [Route("profile")]
+        public async Task<ActionResult<UserDTO>> GetUser()
+        {
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            ApplicationUser user = await _userManager.FindByIdAsync(userId);
+
+            return Ok(_mapper.Map<UserDTO>(user));
         }
 
         // [HttpPost]
