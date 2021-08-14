@@ -10,8 +10,7 @@
       <nb-option *ngFor="let theme of themes" [value]="theme.value"> {{ theme.name }}</nb-option>
     </nb-select> -->
 
-    <button nbButton shape="rectangle" *ngIf="currentTheme === 'default'" status="primary"
-      (click)="changeTheme('dark')">
+    <button nbButton shape="rectangle" *ngIf="currentTheme === 'default'" status="basic" (click)="changeTheme('dark')">
       <nb-icon icon="moon-outline"></nb-icon>
     </button>
 
