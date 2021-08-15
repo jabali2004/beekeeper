@@ -48,7 +48,7 @@ namespace BeekeeperBackend.Controllers
         [Route("login")]
         public async Task<IActionResult> Login([FromBody] LoginReq model)
         {
-            var user = await _userManager.FindByNameAsync(model.Username);
+            var user = await _userManager.FindByEmailAsync(model.Email);
             if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
             {
                 // var userRoles = await userManager.GetRolesAsync(user);
@@ -56,6 +56,7 @@ namespace BeekeeperBackend.Controllers
                 var authClaims = new List<Claim>
                 {
                     new Claim(ClaimTypes.Name, user.UserName),
+                    new Claim(ClaimTypes.Email, user.Email),
                     new Claim(ClaimTypes.NameIdentifier, user.Id),
                 };
 
