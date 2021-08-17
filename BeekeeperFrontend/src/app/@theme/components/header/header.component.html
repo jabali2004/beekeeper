@@ -32,7 +32,7 @@
 
   <nb-actions size="small">
     <nb-action class="user-action" *ngIf="isAuthenticated">
-      <nb-user [nbContextMenu]="userMenu" [onlyPicture]="false" [name]="user ? user.userName : ''">
+      <nb-user [nbContextMenu]="userMenu" [onlyPicture]="true" [name]="user ? user.userName : ''">
       </nb-user>
     </nb-action>
 

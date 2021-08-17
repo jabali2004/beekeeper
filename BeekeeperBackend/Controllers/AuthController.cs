@@ -20,6 +20,8 @@ namespace BeekeeperBackend.Controllers
 
     // TODO: Refactor and enhance auth controller
     // TODO: Implement roles
+    // TODO: Add password restore functionality
+    // TODO: Add user controller for user specifc functionally | move profile route
 
     [Authorize]
     [Route("api/auth")]

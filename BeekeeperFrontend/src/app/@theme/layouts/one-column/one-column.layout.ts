@@ -13,8 +13,6 @@ import { Component } from '@angular/core';
         <ng-content select="nb-menu"></ng-content>
       </nb-sidebar>
 
-      <!-- TODO: Sidebar soll für die Startseite ausgeblendet werden! -->
-
       <nb-layout-column>
         <ng-content select="router-outlet"></ng-content>
       </nb-layout-column>
