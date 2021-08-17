@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31512.422
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeekeeperBackend", "BeekeeperBackend\BeekeeperBackend.csproj", "{B62C9C20-270C-4579-B0B0-9E0668A5C2C3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeekeeperBackend", "Beekeeper.Backend\BeekeeperBackend.csproj", "{B62C9C20-270C-4579-B0B0-9E0668A5C2C3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
