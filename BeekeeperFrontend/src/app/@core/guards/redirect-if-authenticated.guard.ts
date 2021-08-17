@@ -7,17 +7,14 @@ import {
   UrlTree,
   Router
 } from '@angular/router';
-// import { AuthService } from '@strapi-libs/ng-strapi-auth';
 import { Observable } from 'rxjs';
+import { AuthService } from '../services/auth/auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RedirectIfAuthenticatedGuard implements CanLoad {
-  constructor(
-    // private authService: AuthService
-    private router: Router
-  ) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   canLoad(
     route: Route,
@@ -27,13 +24,13 @@ export class RedirectIfAuthenticatedGuard implements CanLoad {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    // if (!this.authService.isAuthenticated) {
-    //   return true;
-    // }
+    if (!this.authService.isAuthenticated) {
+      return true;
+    }
 
     return true;
 
-    this.router.navigateByUrl('/pages/home');
+    this.router.navigateByUrl('/pages');
     return true;
   }
 }

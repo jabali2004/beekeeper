@@ -31,11 +31,10 @@
   </nb-actions>
 
   <nb-actions size="small">
-    <!-- <nb-action class="user-action" *ngIf="isAuthenticated">
-      <nb-user [nbContextMenu]="userMenu" [picture]="profileImage ? profileImage : ''" [onlyPicture]="true"
-        [name]="user ? user.username : ''">
+    <nb-action class="user-action" *ngIf="isAuthenticated">
+      <nb-user [nbContextMenu]="userMenu" [onlyPicture]="false" [name]="user ? user.userName : ''">
       </nb-user>
-    </nb-action> -->
+    </nb-action>
 
     <nb-action *ngIf="!isAuthenticated" class="auth-buttons">
       <button nbButton ghost status="basic" (click)="loginClick()"

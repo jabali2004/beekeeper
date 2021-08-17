@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
+import { AuthService } from './@core/services/auth/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +12,8 @@ export class AppComponent implements OnDestroy, OnInit {
   constructor(
     public titleService: Title,
     private translate: TranslateService,
-    private route: Router
+    private route: Router,
+    private authService: AuthService
   ) {
     // Check browser Language and translate
     const language = navigator.language;

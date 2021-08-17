@@ -20,6 +20,8 @@ import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { UserDTO } from 'src/app/api_client';
+import { AuthService } from 'src/app/@core/services/auth/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -30,6 +32,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private destroy$: Subject<void> = new Subject<void>();
   userPictureOnly = false;
   @Input() useSidebar = true;
+
+  user: UserDTO;
 
   themes = [
     {
@@ -72,7 +76,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private themeService: NbThemeService,
     private layoutService: LayoutService,
     private breakpointService: NbMediaBreakpointsService,
-    // private authService: AuthService,
+    private authService: AuthService,
     private router: Router,
     private translate: TranslateService
   ) {}
@@ -88,15 +92,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     this.currentTheme = this.themeService.currentTheme;
 
-    // if (this.authService.getUser()) {
-    //   this.user = this.authService.getUser();
-    //   this.profileImageService.loadImage(this.user.id);
-    // }
+    if (this.authService.getUser()) {
+      this.user = this.authService.getUser();
+      // this.profileImageService.loadImage(this.user.id);
+    }
 
-    // this.authService.UserState.subscribe(() => {
-    //   this.user = this.authService.getUser();
-    //   this.profileImageService.loadImage(this.user.id);
-    // });
+    this.authService.UserState.subscribe(() => {
+      this.user = this.authService.getUser();
+      // this.profileImageService.loadImage(this.user.id);
+    });
 
     // this.userService
     //   .getUsers()
@@ -136,10 +140,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
       }
     });
 
-    // this.isAuthenticated = this.authService.isAuthenticated;
-    // this.authService.AuthState.subscribe(() => {
-    //   this.isAuthenticated = this.authService.isAuthenticated;
-    // });
+    this.isAuthenticated = this.authService.isAuthenticated;
+    this.authService.AuthState.subscribe(() => {
+      this.isAuthenticated = this.authService.isAuthenticated;
+    });
   }
 
   ngOnDestroy() {

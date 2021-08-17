@@ -10,7 +10,8 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "extract-translations": "ngx-translate-extract --input ./src --output ./src/assets/i18n/en.json --output ./src/assets/i18n/de.json --format namespaced-json  --marker . --sort",
-    "openapilocal": "java -jar ./openapi/openapi-generator-cli.jar generate -g typescript-angular -o ./src/app/api_client -c ./openapi/swagger-codegen-cli.cfg.json -t ./openapi/templates -i ./docs/spm-backend.json --skip-validate-spec"
+    "openapi:update": "curl http://localhost:5000/swagger/v1/swagger.json > docs/backend.json && npm run openapi:generate",
+    "openapi:generate": "java -jar ./openapi/openapi-generator-cli.jar generate -g typescript-angular -o ./src/app/api_client -c ./openapi/swagger-codegen-cli.cfg.json -t ./openapi/templates -i ./docs/backend.json --skip-validate-spec"
   },
   "private": true,
   "dependencies": {

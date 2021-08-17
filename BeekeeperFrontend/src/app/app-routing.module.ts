@@ -15,11 +15,11 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages/pages.module').then((m) => m.PagesModule)
   },
-  // {
-  //   path: 'auth',
-  //   loadChildren: () =>
-  //     import('./pages/auth/auth.module').then((m) => m.AuthModule)
-  // },
+  {
+    path: 'auth',
+    loadChildren: () =>
+      import('./pages/auth/auth.module').then((m) => m.AuthModule)
+  },
   {
     path: '**',
     redirectTo: 'pages'
