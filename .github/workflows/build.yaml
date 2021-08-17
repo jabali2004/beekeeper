@@ -37,10 +37,10 @@ jobs:
         run: |
           npm install -g @angular/cli
       - name: Install project dependencies
-        run: cd BeekeeperFrontend && npm install
+        run: cd Beekeeper.Frontend && npm install
       - name: Openapi
-        run: cd BeekeeperFrontend && npm run openapi:generate
+        run: cd Beekeeper.Frontend && npm run openapi:generate
       - name: Lint project
-        run: cd BeekeeperFrontend && ng lint
+        run: cd Beekeeper.Frontend && ng lint
       - name: Build project
-        run: cd BeekeeperFrontend && ng build
+        run: cd Beekeeper.Frontend && ng build
