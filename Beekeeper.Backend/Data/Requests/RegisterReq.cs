@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace BeekeeperBackend.Data
+namespace BeekeeperBackend.Data.Requests
 {
     public class RegisterReq
     {
@@ -13,5 +13,7 @@ namespace BeekeeperBackend.Data
 
         [Required(ErrorMessage = "Password is required")]
         public string Password { get; set; }
+
+        public string DisplayName {  get; set; }
     }
 }

@@ -4,14 +4,16 @@ using BeekeeperBackend;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BeekeeperBackend.Migrations
 {
     [DbContext(typeof(BeekeeperContext))]
-    partial class BeekeeperContextModelSnapshot : ModelSnapshot
+    [Migration("20210820152140_Add_DisplayName_To_ApplicationUser")]
+    partial class Add_DisplayName_To_ApplicationUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
