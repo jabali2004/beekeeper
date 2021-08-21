@@ -2,7 +2,21 @@ version: 2
 updates:
 # Fetch and update latest `npm` packages
 - package-ecosystem: npm
-  directory: '/'
+  directory: '/Beekeeper.Frontend/'
+  schedule:
+    interval: daily
+    time: '00:00'
+  open-pull-requests-limit: 10
+  reviewers:
+    - jabali2004
+  assignees:
+    - jabali2004
+  commit-message:
+    prefix: fix
+    prefix-development: chore
+    include: scope
+- package-ecosystem: nuget
+  directory: '/Beekeeper.Backend/'
   schedule:
     interval: daily
     time: '00:00'
