@@ -101,7 +101,7 @@ namespace BeekeeperBackend.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IdentityResult))]
         public async Task<IActionResult> Register([FromBody] RegisterReq model)
         {
-            var userExists = await _userManager.FindByNameAsync(model.Username);
+            var userExists = await _userManager.FindByNameAsync(model.Email);
             if (userExists != null)
             {
                 return StatusCode(
