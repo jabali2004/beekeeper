@@ -202,13 +202,12 @@ export class AuthService {
    */
   private async requestUser(): Promise<UserDTO | HttpErrorResponse> {
     try {
-      const res: UserDTO | HttpErrorResponse = await this.authService
-        .apiAuthProfileGet()
-        .toPromise()
-        .catch((err) => {
-          console.error(err);
-          return err;
-        });
+      const res: UserDTO | HttpErrorResponse = await lastValueFrom(
+        this.authService.apiAuthProfileGet()
+      ).catch((err) => {
+        console.error(err);
+        return err;
+      });
 
       return res;
     } catch (error) {

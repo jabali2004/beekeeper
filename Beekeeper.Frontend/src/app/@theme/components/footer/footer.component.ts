@@ -9,11 +9,21 @@ import { TranslateService } from '@ngx-translate/core';
 export class FooterComponent implements OnInit {
   constructor(private translate: TranslateService) {}
 
-  selectedLanguageItem: string;
+  public selectedLanguageItem: string;
 
   ngOnInit() {
-    switch (navigator.language) {
+    let language = navigator.language;
+    const storedLanguage = localStorage.getItem('lang');
+
+    if (storedLanguage) {
+      language = storedLanguage;
+    }
+
+    switch (language) {
       case 'de-DE':
+        this.selectedLanguageItem = 'de-DE';
+        break;
+      case 'de':
         this.selectedLanguageItem = 'de-DE';
         break;
       default:
@@ -23,12 +33,19 @@ export class FooterComponent implements OnInit {
   }
 
   changeLanguage(language: string) {
+    console.log(language);
     switch (language) {
       case 'de-DE':
         this.translate.use('de');
+        localStorage.setItem('lang', 'de-DE');
+        break;
+      case 'de':
+        this.translate.use('de');
+        localStorage.setItem('lang', 'de');
         break;
       default:
         this.translate.use('en');
+        localStorage.setItem('lang', 'en');
         break;
     }
   }

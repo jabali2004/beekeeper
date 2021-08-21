@@ -79,6 +79,12 @@
           "save": "Save"
         },
         "input": {
+          "displayName": {
+            "label": "Display Name:",
+            "min_length_message": "Display Name should contains from {{min}} to {{max}} characters",
+            "placeholder": "Display Name",
+            "required_message": "Display Name is required!"
+          },
           "email": {
             "label": "Email address:",
             "placeholder": "Email address",
@@ -137,7 +143,7 @@
           }
         },
         "input": {
-          "displayname": {
+          "displayName": {
             "label": "Display Name:",
             "min_length_message": "Display Name should contains from {{min}} to {{max}} characters",
             "placeholder": "Display Name",

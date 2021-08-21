@@ -16,12 +16,18 @@ export class AppComponent implements OnDestroy, OnInit {
     private authService: AuthService
   ) {
     // Check browser Language and translate
-    const language = navigator.language;
+    let language = navigator.language;
+    const storedLanguage = localStorage.getItem('lang');
 
-    // TODO: Store selected language for next visit
+    if (storedLanguage) {
+      language = storedLanguage;
+    }
 
     switch (language) {
       case 'de-DE':
+        this.translate.use('de');
+        break;
+      case 'de':
         this.translate.use('de');
         break;
       default:
