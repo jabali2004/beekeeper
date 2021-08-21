@@ -11,6 +11,8 @@ import {
   IUserDTO,
   LoginReq,
   RegisterReq,
+  UpdateUserPasswordReq,
+  UpdateUserReq,
   UserDTO
 } from '../../../api_client';
 import { AuthTokenService } from './auth-token.service';
@@ -118,14 +120,27 @@ export class AuthService {
   /**
    * Update user profile
    */
-  // public async updateProfile(updateReq: IReqUserUpdate): Promise<void> {
-  //   const res: IUser | HttpErrorResponse = await this.updateUser(updateReq);
+  public async updateProfile(updateReq: UpdateUserReq): Promise<void> {
+    const res: UserDTO | HttpErrorResponse = await this.updateUser(updateReq);
 
-  //   if (res) {
-  //     this.user = new User(res);
-  //     this.userState.next();
-  //   }
-  // }
+    if (res) {
+      this.user = new UserDTO(res);
+      this.userState.next();
+    }
+  }
+
+  public async updateProfilePassword(
+    updatePasswordReq: UpdateUserPasswordReq
+  ): Promise<void> {
+    const res: UserDTO | HttpErrorResponse = await this.updatePassword(
+      updatePasswordReq
+    );
+
+    if (res) {
+      this.user = new UserDTO(res);
+      this.userState.next();
+    }
+  }
 
   /**
    * Request password reset mail
@@ -206,19 +221,36 @@ export class AuthService {
   /**
    * Update user
    */
-  // private async updateUser(
-  //   updateReq: IReqUserUpdate
-  // ): Promise<IUserDTO | HttpErrorResponse> {
-  //   try {
-  //     const res: IUser | HttpErrorResponse = (await this.httpClient
-  //       .put(this.apiUrl + '/users/me', updateReq)
-  //       .toPromise()) as IUser | HttpErrorResponse;
+  private async updateUser(
+    updateReq: UpdateUserReq
+  ): Promise<UserDTO | HttpErrorResponse> {
+    try {
+      const res: UserDTO | HttpErrorResponse = await lastValueFrom(
+        this.authService.apiAuthProfilePut(updateReq)
+      );
 
-  //     return res;
-  //   } catch (error) {
-  //     throw new HttpErrorResponse(error);
-  //   }
-  // }
+      return res;
+    } catch (error) {
+      throw new HttpErrorResponse(error);
+    }
+  }
+
+  /**
+   * Update password of user
+   */
+  private async updatePassword(
+    updatePasswordReq: UpdateUserPasswordReq
+  ): Promise<UserDTO | HttpErrorResponse> {
+    try {
+      const res: UserDTO | HttpErrorResponse = await lastValueFrom(
+        this.authService.apiAuthProfilePasswordPut(updatePasswordReq)
+      );
+
+      return res;
+    } catch (error) {
+      throw new HttpErrorResponse(error);
+    }
+  }
 
   /**
    * Login user and request token

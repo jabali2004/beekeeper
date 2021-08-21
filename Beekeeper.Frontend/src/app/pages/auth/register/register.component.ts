@@ -17,8 +17,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
     success: true
   };
   authRegisterReq = {
-    displayname: '',
-    username: '',
+    displayName: '',
+    userName: '',
     email: '',
     password: '',
     password_confirmation: ''
@@ -29,12 +29,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
   messages: string[] = [];
 
   config = {
-    displaynameRequired: true,
-    displaynameMinLength: 2,
-    displaynameMaxLength: 100,
-    usernameRequired: true,
-    usernameMinLength: 2,
-    usernameMaxLength: 100,
+    displayNameRequired: true,
+    displayNameMinLength: 2,
+    displayNameMaxLength: 100,
+    userNameRequired: true,
+    userNameMinLength: 2,
+    userNameMaxLength: 100,
     emailRequired: true,
     passwordRequired: true,
     passwordMinLength: 6,
@@ -65,9 +65,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.authService
       .register(
         this.authRegisterReq.email,
-        this.authRegisterReq.username,
+        this.authRegisterReq.userName,
         this.authRegisterReq.password,
-        this.authRegisterReq.displayname
+        this.authRegisterReq.displayName
       )
       .then(() => {
         this.router.navigateByUrl('/auth/login');

@@ -20,41 +20,41 @@
 
 <form (ngSubmit)="register()" #form="ngForm" aria-labelledby="title">
   <div class="form-control-group">
-    <label class="label" for="input-displayname">{{ 'auth.register.form.input.displayname.label' | translate }}</label>
-    <input nbInput [(ngModel)]="authRegisterReq.displayname" #displayname="ngModel" id="input-displayname"
-      name="displayname" placeholder="{{ 'auth.register.form.input.displayname.placeholder' | translate }}" autofocus
-      fullWidth fieldSize="large" [status]="displayname.dirty ? (displayname.invalid ? 'danger' : 'success') : 'basic'"
-      [required]="config.displaynameRequired" [minlength]="config.displaynameMinLength"
-      [maxlength]="config.displaynameMaxLength"
-      [attr.aria-invalid]="displayname.invalid && displayname.touched ? true : null" />
-    <ng-container *ngIf="displayname.invalid && displayname.touched">
-      <p class="caption status-danger" *ngIf="displayname.errors?.required">
-        {{ 'auth.register.form.input.displayname.required_message' | translate }}
+    <label class="label" for="input-displayName">{{ 'auth.register.form.input.displayName.label' | translate }}</label>
+    <input nbInput [(ngModel)]="authRegisterReq.displayName" #displayName="ngModel" id="input-displayName"
+      name="displayName" placeholder="{{ 'auth.register.form.input.displayName.placeholder' | translate }}" autofocus
+      fullWidth fieldSize="large" [status]="displayName.dirty ? (displayName.invalid ? 'danger' : 'success') : 'basic'"
+      [required]="config.displayNameRequired" [minlength]="config.displayNameMinLength"
+      [maxlength]="config.displayNameMaxLength"
+      [attr.aria-invalid]="displayName.invalid && displayName.touched ? true : null" />
+    <ng-container *ngIf="displayName.invalid && displayName.touched">
+      <p class="caption status-danger" *ngIf="displayName.errors?.required">
+        {{ 'auth.register.form.input.displayName.required_message' | translate }}
       </p>
-      <p class="caption status-danger" *ngIf="displayname.errors?.minlength || displayname.errors?.maxlength">
+      <p class="caption status-danger" *ngIf="displayName.errors?.minlength || displayName.errors?.maxlength">
         {{
-          'auth.register.form.input.displayname.min_length_message'
-            | translate: { min: config.displaynameMinLength, max: config.displaynameMaxLength }
+          'auth.register.form.input.displayName.min_length_message'
+            | translate: { min: config.displayNameMinLength, max: config.displayNameMaxLength }
         }}
       </p>
     </ng-container>
   </div>
 
   <div class="form-control-group">
-    <label class="label" for="input-username">{{ 'auth.register.form.input.username.label' | translate }}</label>
-    <input nbInput [(ngModel)]="authRegisterReq.username" #username="ngModel" id="input-username" name="username"
-      placeholder="{{ 'auth.register.form.input.username.placeholder' | translate }}" autofocus fullWidth
-      fieldSize="large" [status]="username.dirty ? (username.invalid ? 'danger' : 'success') : 'basic'"
-      [required]="config.usernameRequired" [minlength]="config.usernameMinLength" [maxlength]="config.usernameMaxLength"
-      [attr.aria-invalid]="username.invalid && username.touched ? true : null" />
-    <ng-container *ngIf="username.invalid && username.touched">
-      <p class="caption status-danger" *ngIf="username.errors?.required">
-        {{ 'auth.register.form.input.username.required_message' | translate }}
+    <label class="label" for="input-userName">{{ 'auth.register.form.input.userName.label' | translate }}</label>
+    <input nbInput [(ngModel)]="authRegisterReq.userName" #userName="ngModel" id="input-userName" name="userName"
+      placeholder="{{ 'auth.register.form.input.userName.placeholder' | translate }}" autofocus fullWidth
+      fieldSize="large" [status]="userName.dirty ? (userName.invalid ? 'danger' : 'success') : 'basic'"
+      [required]="config.userNameRequired" [minlength]="config.userNameMinLength" [maxlength]="config.userNameMaxLength"
+      [attr.aria-invalid]="userName.invalid && userName.touched ? true : null" />
+    <ng-container *ngIf="userName.invalid && userName.touched">
+      <p class="caption status-danger" *ngIf="userName.errors?.required">
+        {{ 'auth.register.form.input.userName.required_message' | translate }}
       </p>
-      <p class="caption status-danger" *ngIf="username.errors?.minlength || username.errors?.maxlength">
+      <p class="caption status-danger" *ngIf="userName.errors?.minlength || userName.errors?.maxlength">
         {{
-          'auth.register.form.input.username.min_length_message'
-            | translate: { min: config.usernameMinLength, max: config.usernameMaxLength}
+          'auth.register.form.input.userName.min_length_message'
+            | translate: { min: config.userNameMinLength, max: config.userNameMaxLength}
         }}
       </p>
     </ng-container>

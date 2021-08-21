@@ -79,65 +79,7 @@
           "save": "Speichern"
         },
         "input": {
-          "email": {
-            "label": "Email Adresse:",
-            "placeholder": "Email Adresse",
-            "required_message": "Eine Email Adresse wird benötigt!",
-            "valid_message": "Diese Email Adresse ist nicht valide!"
-          },
-          "firstname": {
-            "label": "Vorname:",
-            "min_length_message": "Der Vorname sollte zwischen {{min}} und {{max}} Zeichen enthalten.",
-            "placeholder": "Vorname",
-            "required_message": "Ein Vorname wird benötigt!"
-          },
-          "lastname": {
-            "label": "Nachname:",
-            "min_length_message": "Der Nachname sollte zwischen {{min}} und {{max}} Zeichen enthalten.",
-            "placeholder": "Nachname",
-            "required_message": "Ein Nachname wird benötigt!"
-          },
-          "password": {
-            "label": "Passwort:",
-            "min_length_message": "Das Passwort sollte zwischen {{min}} und {{max}} Zeichen enthalten.",
-            "placeholder": "Passwort",
-            "required_message": "Ein Passwort wird benötigt!"
-          },
-          "repeat_password": {
-            "label": "Passwort bestätigen:",
-            "match_message": "Beide Passwörter müssen übereinstimmen!",
-            "placeholder": "Passwort bestätigen",
-            "required_message": "Eine Passwort Bestätigten wird benötigt!"
-          },
-          "username": {
-            "label": "Username:",
-            "min_length_message": "Der Username sollte zwischen {{min}} und {{max}} Zeichen enthalten.",
-            "placeholder": "Username",
-            "required_message": "Ein Username wird benötigt!"
-          }
-        }
-      },
-      "general_information": {
-        "title": "Allgemeine Informationen"
-      },
-      "messages": {
-        "error": "Es ist ein Fehler aufgetreten!",
-        "success": "Erfolgreich registriert!"
-      }
-    },
-    "register": {
-      "form": {
-        "button": {
-          "existing_account": {
-            "text": "Hast du schon einen Account?",
-            "title": "Anmelden"
-          },
-          "register": {
-            "title": "Registrieren"
-          }
-        },
-        "input": {
-          "displayname": {
+          "displayName": {
             "label": "Anzeige Name:",
             "min_length_message": "Der Anzeige Name sollte zwischen {{min}} und {{max}} Zeichen enthalten.",
             "placeholder": "Anzeige Name",
@@ -173,7 +115,71 @@
             "placeholder": "Passwort bestätigen",
             "required_message": "Eine Passwort Bestätigten wird benötigt!"
           },
-          "username": {
+          "userName": {
+            "label": "Username:",
+            "min_length_message": "Der Username sollte zwischen {{min}} und {{max}} Zeichen enthalten.",
+            "placeholder": "Username",
+            "required_message": "Ein Username wird benötigt!"
+          }
+        }
+      },
+      "general_information": {
+        "title": "Allgemeine Informationen"
+      },
+      "messages": {
+        "error": "Es ist ein Fehler aufgetreten!",
+        "success": "Erfolgreich registriert!"
+      }
+    },
+    "register": {
+      "form": {
+        "button": {
+          "existing_account": {
+            "text": "Hast du schon einen Account?",
+            "title": "Anmelden"
+          },
+          "register": {
+            "title": "Registrieren"
+          }
+        },
+        "input": {
+          "displayName": {
+            "label": "Anzeige Name:",
+            "min_length_message": "Der Anzeige Name sollte zwischen {{min}} und {{max}} Zeichen enthalten.",
+            "placeholder": "Anzeige Name",
+            "required_message": "Ein Anzeige Name wird benötigt!"
+          },
+          "email": {
+            "label": "Email Adresse:",
+            "placeholder": "Email Adresse",
+            "required_message": "Eine Email Adresse wird benötigt!",
+            "valid_message": "Diese Email Adresse ist nicht valide!"
+          },
+          "firstname": {
+            "label": "Vorname:",
+            "min_length_message": "Der Vorname sollte zwischen {{min}} und {{max}} Zeichen enthalten.",
+            "placeholder": "Vorname",
+            "required_message": "Ein Vorname wird benötigt!"
+          },
+          "lastname": {
+            "label": "Nachname:",
+            "min_length_message": "Der Nachname sollte zwischen {{min}} und {{max}} Zeichen enthalten.",
+            "placeholder": "Nachname",
+            "required_message": "Ein Nachname wird benötigt!"
+          },
+          "password": {
+            "label": "Passwort:",
+            "min_length_message": "Das Passwort sollte zwischen {{min}} und {{max}} Zeichen enthalten.",
+            "placeholder": "Passwort",
+            "required_message": "Ein Passwort wird benötigt!"
+          },
+          "repeat_password": {
+            "label": "Passwort bestätigen:",
+            "match_message": "Beide Passwörter müssen übereinstimmen!",
+            "placeholder": "Passwort bestätigen",
+            "required_message": "Eine Passwort Bestätigten wird benötigt!"
+          },
+          "userName": {
             "label": "Username:",
             "min_length_message": "Der Username sollte zwischen {{min}} und {{max}} Zeichen enthalten.",
             "placeholder": "Username",
