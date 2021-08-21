@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from 'src/app/@core/services/auth/auth.service';
 
+// TODO: refactor -> use interfaces and models
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -16,8 +17,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     success: true
   };
   authRegisterReq = {
-    // firstname: '',
-    // lastname: '',
+    displayname: '',
     username: '',
     email: '',
     password: '',
@@ -29,12 +29,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
   messages: string[] = [];
 
   config = {
-    firstnameRequired: false,
-    firstnameMinLength: 2,
-    firstnameMaxLength: 100,
-    lastnameRequired: false,
-    lastnameMinLength: 2,
-    lastnameMaxLength: 100,
+    displaynameRequired: true,
+    displaynameMinLength: 2,
+    displaynameMaxLength: 100,
     usernameRequired: true,
     usernameMinLength: 2,
     usernameMaxLength: 100,
@@ -69,7 +66,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
       .register(
         this.authRegisterReq.email,
         this.authRegisterReq.username,
-        this.authRegisterReq.password
+        this.authRegisterReq.password,
+        this.authRegisterReq.displayname
       )
       .then(() => {
         this.router.navigateByUrl('/auth/login');

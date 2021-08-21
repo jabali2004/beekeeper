@@ -85,12 +85,14 @@ export class AuthService {
   public async register(
     email: string,
     username: string,
-    password: string
+    password: string,
+    displayName: string
   ): Promise<void> {
     const req: RegisterReq = new RegisterReq({
       username,
       email,
-      password
+      password,
+      displayName
     });
 
     const res: {} | HttpErrorResponse = await lastValueFrom(

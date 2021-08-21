@@ -1,39 +1,4 @@
 {
-  "footer": {
-    "copyright": ""
-  },
-  "header": {
-    "login": "Anmelden",
-    "register": "Registrieren"
-  },
-  "pages": {
-    "home": {
-      "title": "Home"
-    }
-  },
-  "title": "Beekeeper",
-  "errors": {
-    "auth": {
-      "login": {
-        "password_or_email": "Passwort oder Email Adresse sind möglicherweise falsch!",
-        "undefined": "Es ist ein unbekannter Fehler aufgetreten!",
-        "email_verification": "Die Email muss zuvor bestätigt werden! Bitte überprüfen Sie ihr Mail Postfach.",
-        "account_blocked": "Ihr Account wurde geblockt! Eine Anmeldung ist deshalb nicht möglich."
-      },
-      "register": {
-        "password_or_email": "Email oder Username sind möglicherweise schon vergeben!",
-        "undefined": "Es ist ein unbekannter Fehler aufgetreten!"
-      },
-      "request-password": {
-        "email": "Zu dieser Email Adresse gehört kein Account!",
-        "undefined": "Es ist ein unbekannter Fehler aufgetreten!"
-      },
-      "reset-password": {
-        "code": "Code zur Wiederherstellung ist abgelaufen oder ungültig!",
-        "undefined": "Es ist ein unbekannter Fehler aufgetreten!"
-      }
-    }
-  },
   "auth": {
     "change_password": {
       "form": {
@@ -72,11 +37,11 @@
       "form": {
         "button": {
           "login": "Einloggen",
+          "login_with": "Einloggen mit",
           "register": {
             "label": "Hast du noch keinen Account?",
             "link": "Registrieren"
-          },
-          "login_with": "Einloggen mit"
+          }
         },
         "input": {
           "email": {
@@ -104,6 +69,62 @@
     "logout": {
       "logout_text": "Du wirst abgemeldet, bitte warten ..."
     },
+    "profile": {
+      "change_password": {
+        "title": "Passwort ändern"
+      },
+      "form": {
+        "button": {
+          "change_password": "Password ändern",
+          "save": "Speichern"
+        },
+        "input": {
+          "email": {
+            "label": "Email Adresse:",
+            "placeholder": "Email Adresse",
+            "required_message": "Eine Email Adresse wird benötigt!",
+            "valid_message": "Diese Email Adresse ist nicht valide!"
+          },
+          "firstname": {
+            "label": "Vorname:",
+            "min_length_message": "Der Vorname sollte zwischen {{min}} und {{max}} Zeichen enthalten.",
+            "placeholder": "Vorname",
+            "required_message": "Ein Vorname wird benötigt!"
+          },
+          "lastname": {
+            "label": "Nachname:",
+            "min_length_message": "Der Nachname sollte zwischen {{min}} und {{max}} Zeichen enthalten.",
+            "placeholder": "Nachname",
+            "required_message": "Ein Nachname wird benötigt!"
+          },
+          "password": {
+            "label": "Passwort:",
+            "min_length_message": "Das Passwort sollte zwischen {{min}} und {{max}} Zeichen enthalten.",
+            "placeholder": "Passwort",
+            "required_message": "Ein Passwort wird benötigt!"
+          },
+          "repeat_password": {
+            "label": "Passwort bestätigen:",
+            "match_message": "Beide Passwörter müssen übereinstimmen!",
+            "placeholder": "Passwort bestätigen",
+            "required_message": "Eine Passwort Bestätigten wird benötigt!"
+          },
+          "username": {
+            "label": "Username:",
+            "min_length_message": "Der Username sollte zwischen {{min}} und {{max}} Zeichen enthalten.",
+            "placeholder": "Username",
+            "required_message": "Ein Username wird benötigt!"
+          }
+        }
+      },
+      "general_information": {
+        "title": "Allgemeine Informationen"
+      },
+      "messages": {
+        "error": "Es ist ein Fehler aufgetreten!",
+        "success": "Erfolgreich registriert!"
+      }
+    },
     "register": {
       "form": {
         "button": {
@@ -116,6 +137,12 @@
           }
         },
         "input": {
+          "displayname": {
+            "label": "Anzeige Name:",
+            "min_length_message": "Der Anzeige Name sollte zwischen {{min}} und {{max}} Zeichen enthalten.",
+            "placeholder": "Anzeige Name",
+            "required_message": "Ein Anzeige Name wird benötigt!"
+          },
           "email": {
             "label": "Email Adresse:",
             "placeholder": "Email Adresse",
@@ -218,62 +245,41 @@
       },
       "subtitle": "Hallo! Hier kannst du deinen Account mit deiner Email wiederherrstellen.",
       "title": "Wiederherrstellung"
-    },
-    "profile": {
-      "change_password": {
-        "title": "Passwort ändern"
+    }
+  },
+  "errors": {
+    "auth": {
+      "login": {
+        "account_blocked": "Ihr Account wurde geblockt! Eine Anmeldung ist deshalb nicht möglich.",
+        "email_verification": "Die Email muss zuvor bestätigt werden! Bitte überprüfen Sie ihr Mail Postfach.",
+        "password_or_email": "Passwort oder Email Adresse sind möglicherweise falsch!",
+        "undefined": "Es ist ein unbekannter Fehler aufgetreten!"
       },
-      "form": {
-        "button": {
-          "change_password": "Password ändern",
-          "save": "Speichern"
-        },
-        "input": {
-          "email": {
-            "label": "Email Adresse:",
-            "placeholder": "Email Adresse",
-            "required_message": "Eine Email Adresse wird benötigt!",
-            "valid_message": "Diese Email Adresse ist nicht valide!"
-          },
-          "firstname": {
-            "label": "Vorname:",
-            "min_length_message": "Der Vorname sollte zwischen {{min}} und {{max}} Zeichen enthalten.",
-            "placeholder": "Vorname",
-            "required_message": "Ein Vorname wird benötigt!"
-          },
-          "lastname": {
-            "label": "Nachname:",
-            "min_length_message": "Der Nachname sollte zwischen {{min}} und {{max}} Zeichen enthalten.",
-            "placeholder": "Nachname",
-            "required_message": "Ein Nachname wird benötigt!"
-          },
-          "password": {
-            "label": "Passwort:",
-            "min_length_message": "Das Passwort sollte zwischen {{min}} und {{max}} Zeichen enthalten.",
-            "placeholder": "Passwort",
-            "required_message": "Ein Passwort wird benötigt!"
-          },
-          "repeat_password": {
-            "label": "Passwort bestätigen:",
-            "match_message": "Beide Passwörter müssen übereinstimmen!",
-            "placeholder": "Passwort bestätigen",
-            "required_message": "Eine Passwort Bestätigten wird benötigt!"
-          },
-          "username": {
-            "label": "Username:",
-            "min_length_message": "Der Username sollte zwischen {{min}} und {{max}} Zeichen enthalten.",
-            "placeholder": "Username",
-            "required_message": "Ein Username wird benötigt!"
-          }
-        }
+      "register": {
+        "password_or_email": "Email oder Username sind möglicherweise schon vergeben!",
+        "undefined": "Es ist ein unbekannter Fehler aufgetreten!"
       },
-      "general_information": {
-        "title": "Allgemeine Informationen"
+      "request-password": {
+        "email": "Zu dieser Email Adresse gehört kein Account!",
+        "undefined": "Es ist ein unbekannter Fehler aufgetreten!"
       },
-      "messages": {
-        "error": "Es ist ein Fehler aufgetreten!",
-        "success": "Erfolgreich registriert!"
+      "reset-password": {
+        "code": "Code zur Wiederherstellung ist abgelaufen oder ungültig!",
+        "undefined": "Es ist ein unbekannter Fehler aufgetreten!"
       }
     }
-  }
+  },
+  "footer": {
+    "copyright": ""
+  },
+  "header": {
+    "login": "Anmelden",
+    "register": "Registrieren"
+  },
+  "pages": {
+    "home": {
+      "title": "Home"
+    }
+  },
+  "title": "Beekeeper"
 }

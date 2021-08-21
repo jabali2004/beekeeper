@@ -1,39 +1,4 @@
 {
-  "footer": {
-    "copyright": ""
-  },
-  "header": {
-    "login": "Login",
-    "register": "Register"
-  },
-  "pages": {
-    "home": {
-      "title": "Home"
-    }
-  },
-  "title": "Beekeeper",
-  "errors": {
-    "auth": {
-      "login": {
-        "password_or_email": "Password or email address may be wrong!",
-        "undefined": "An unknown error has occurred!",
-        "email_verification": "The email must be confirmed before! Please check your mailbox.",
-        "account_blocked": "Your account has been blocked! Therefore, registration is not possible."
-      },
-      "register": {
-        "password_or_email": "Email or username are possibly already taken!",
-        "undefined": "An unknown error has occurred!"
-      },
-      "request-password": {
-        "email": "No account belongs to this email address!",
-        "undefined": "An unknown error has occurred!"
-      },
-      "reset-password": {
-        "code": "Recovery code has expired or is invalid!",
-        "undefined": "An unknown error has occurred!"
-      }
-    }
-  },
   "auth": {
     "change_password": {
       "form": {
@@ -72,11 +37,11 @@
       "form": {
         "button": {
           "login": "Log In",
+          "login_with": "Log In with",
           "register": {
             "label": "Don't have an account?",
             "link": "Register"
-          },
-          "login_with": "Log In with"
+          }
         },
         "input": {
           "email": {
@@ -104,6 +69,62 @@
     "logout": {
       "logout_text": "Logging out, please wait..."
     },
+    "profile": {
+      "change_password": {
+        "title": "Change password"
+      },
+      "form": {
+        "button": {
+          "change_password": "Change password",
+          "save": "Save"
+        },
+        "input": {
+          "email": {
+            "label": "Email address:",
+            "placeholder": "Email address",
+            "required_message": "Email is required!",
+            "valid_message": "Email should be the real one!"
+          },
+          "firstname": {
+            "label": "Firstname:",
+            "min_length_message": "Firstname should contains from {{min}} to {{max}} characters",
+            "placeholder": "Firstname",
+            "required_message": "Firstname is required!"
+          },
+          "lastname": {
+            "label": "Lastname:",
+            "min_length_message": "Lastname should contains from {{min}} to {{max}} characters",
+            "placeholder": "Lastname",
+            "required_message": "Lastname is required!"
+          },
+          "password": {
+            "label": "Password:",
+            "min_length_message": "Password should contain from {{min}} to {{max}} characters",
+            "placeholder": "Password",
+            "required_message": "Password is required!"
+          },
+          "repeat_password": {
+            "label": "Repeat password:",
+            "match_message": "Password confirmation is required!",
+            "placeholder": "Repeat password",
+            "required_message": "Password confirmation is required!"
+          },
+          "username": {
+            "label": "Username:",
+            "min_length_message": "Username should contain from {{min}} to {{max}} characters",
+            "placeholder": "Username",
+            "required_message": "Username is required!"
+          }
+        }
+      },
+      "general_information": {
+        "title": "General informations"
+      },
+      "messages": {
+        "error": "Oh snap!",
+        "success": "Hooray!"
+      }
+    },
     "register": {
       "form": {
         "button": {
@@ -116,6 +137,12 @@
           }
         },
         "input": {
+          "displayname": {
+            "label": "Display Name:",
+            "min_length_message": "Display Name should contains from {{min}} to {{max}} characters",
+            "placeholder": "Display Name",
+            "required_message": "Display Name is required!"
+          },
           "email": {
             "label": "Email address:",
             "placeholder": "Email address",
@@ -218,62 +245,41 @@
       },
       "subtitle": "Hello! Restore account with your email.",
       "title": "Restore"
-    },
-    "profile": {
-      "change_password": {
-        "title": "Change password"
+    }
+  },
+  "errors": {
+    "auth": {
+      "login": {
+        "account_blocked": "Your account has been blocked! Therefore, registration is not possible.",
+        "email_verification": "The email must be confirmed before! Please check your mailbox.",
+        "password_or_email": "Password or email address may be wrong!",
+        "undefined": "An unknown error has occurred!"
       },
-      "form": {
-        "button": {
-          "change_password": "Change password",
-          "save": "Save"
-        },
-        "input": {
-          "email": {
-            "label": "Email address:",
-            "placeholder": "Email address",
-            "required_message": "Email is required!",
-            "valid_message": "Email should be the real one!"
-          },
-          "firstname": {
-            "label": "Firstname:",
-            "min_length_message": "Firstname should contains from {{min}} to {{max}} characters",
-            "placeholder": "Firstname",
-            "required_message": "Firstname is required!"
-          },
-          "lastname": {
-            "label": "Lastname:",
-            "min_length_message": "Lastname should contains from {{min}} to {{max}} characters",
-            "placeholder": "Lastname",
-            "required_message": "Lastname is required!"
-          },
-          "password": {
-            "label": "Password:",
-            "min_length_message": "Password should contain from {{min}} to {{max}} characters",
-            "placeholder": "Password",
-            "required_message": "Password is required!"
-          },
-          "repeat_password": {
-            "label": "Repeat password:",
-            "match_message": "Password confirmation is required!",
-            "placeholder": "Repeat password",
-            "required_message": "Password confirmation is required!"
-          },
-          "username": {
-            "label": "Username:",
-            "min_length_message": "Username should contain from {{min}} to {{max}} characters",
-            "placeholder": "Username",
-            "required_message": "Username is required!"
-          }
-        }
+      "register": {
+        "password_or_email": "Email or username are possibly already taken!",
+        "undefined": "An unknown error has occurred!"
       },
-      "general_information": {
-        "title": "General informations"
+      "request-password": {
+        "email": "No account belongs to this email address!",
+        "undefined": "An unknown error has occurred!"
       },
-      "messages": {
-        "error": "Oh snap!",
-        "success": "Hooray!"
+      "reset-password": {
+        "code": "Recovery code has expired or is invalid!",
+        "undefined": "An unknown error has occurred!"
       }
     }
-  }
+  },
+  "footer": {
+    "copyright": ""
+  },
+  "header": {
+    "login": "Login",
+    "register": "Register"
+  },
+  "pages": {
+    "home": {
+      "title": "Home"
+    }
+  },
+  "title": "Beekeeper"
 }
