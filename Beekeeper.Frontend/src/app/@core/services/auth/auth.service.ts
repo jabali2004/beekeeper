@@ -210,8 +210,6 @@ export class AuthService {
           return err;
         });
 
-      console.log(res);
-
       return res;
     } catch (error) {
       throw new HttpErrorResponse(error);
