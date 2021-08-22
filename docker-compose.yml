@@ -1,0 +1,12 @@
+version: '3'
+services:
+  beekeeper:
+    build: .
+    ports:
+      - '5000:80'
+      - '5001:443'
+    environment:
+      ConnectionStrings__DefaultConnection: "server=host.docker.internal;database=beekeeper;user=root;password='';"
+      JWT__Secret: 'SUPER_SECRET'
+    extra_hosts:
+      - 'host.docker.internal:172.17.0.1'
