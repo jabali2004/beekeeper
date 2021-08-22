@@ -4,8 +4,9 @@ import { ApolloClientOptions, InMemoryCache } from '@apollo/client/core';
 import { HttpLink } from 'apollo-angular/http';
 import { environment } from 'src/environments/environment';
 
-const uri =
-  environment.GRAPHQL_BASE_PATH || 'http://localhost:4200/api/graphql';
+const uri = !environment.production
+  ? environment.GRAPHQL_BASE_PATH
+  : window.location.origin;
 
 export function createApollo(httpLink: HttpLink): ApolloClientOptions<any> {
   return {

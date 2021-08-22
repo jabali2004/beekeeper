@@ -161,6 +161,8 @@ namespace BeekeeperBackend.Controllers
 
         [HttpGet]
         [Route("profile")]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<UserDTO>> GetUser()
         {
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);

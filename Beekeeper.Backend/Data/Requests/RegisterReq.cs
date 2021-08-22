@@ -14,6 +14,6 @@ namespace BeekeeperBackend.Data.Requests
         [Required(ErrorMessage = "Password is required")]
         public string Password { get; set; }
 
-        public string DisplayName {  get; set; }
+        public string DisplayName { get; set; }
     }
 }

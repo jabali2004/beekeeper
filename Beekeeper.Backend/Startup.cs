@@ -1,25 +1,26 @@
 using System;
 using System.Collections.Generic;
-using System.Reflection;
+using System.IO;
 using System.Text;
+using System.Transactions;
 using AutoMapper;
-using BeekeeperBackend.Data;
 using BeekeeperBackend.Models;
 using BeekeeperBackend.Utils;
+using Hangfire;
+using Hangfire.MySql;
+using Hangfire.SqlServer;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Rewrite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Hangfire;
-using Hangfire.SqlServer;
 
 namespace BeekeeperBackend
 {
@@ -35,8 +36,10 @@ namespace BeekeeperBackend
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var dbConnectionString = Configuration.GetConnectionString("DefaultConnection");
+
             services.AddDbContext<BeekeeperContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseMySql(dbConnectionString, ServerVersion.AutoDetect(dbConnectionString)));
 
             services.AddControllers();
 
@@ -109,18 +112,35 @@ namespace BeekeeperBackend
                 });
 
             // Add Hangfire services.
-            services.AddHangfire(configuration => configuration
-                .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
-                .UseSimpleAssemblyNameTypeSerializer()
-                .UseRecommendedSerializerSettings()
-                .UseSqlServerStorage(Configuration.GetConnectionString("DefaultConnection"), new SqlServerStorageOptions
-                {
-                    CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
-                    SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
-                    QueuePollInterval = TimeSpan.Zero,
-                    UseRecommendedIsolationLevel = true,
-                    DisableGlobalLocks = true
-                }));
+            var mysqlStorageOptions = new MySqlStorageOptions
+            {
+                TransactionIsolationLevel = IsolationLevel.ReadCommitted,
+                QueuePollInterval = TimeSpan.FromSeconds(15),
+                JobExpirationCheckInterval = TimeSpan.FromHours(1),
+                CountersAggregateInterval = TimeSpan.FromMinutes(5),
+                PrepareSchemaIfNecessary = true,
+
+            };
+
+            services.AddHangfire(configuration =>
+            {
+                configuration.UseStorage(
+                    new MySqlStorage(
+                        dbConnectionString,
+                        new MySqlStorageOptions
+                        {
+                            TransactionIsolationLevel = IsolationLevel.ReadCommitted,
+                            QueuePollInterval = TimeSpan.FromSeconds(15),
+                            JobExpirationCheckInterval = TimeSpan.FromHours(1),
+                            CountersAggregateInterval = TimeSpan.FromMinutes(5),
+                            PrepareSchemaIfNecessary = true,
+                            DashboardJobListLimit = 50000,
+                            TransactionTimeout = TimeSpan.FromMinutes(1),
+                            TablesPrefix = "Hangfire"
+                        }
+                    )
+                );
+            });
 
             // Add the processing server as IHostedService
             services.AddHangfireServer();
@@ -128,10 +148,7 @@ namespace BeekeeperBackend
             services.AddHttpContextAccessor();
 
             // Auto Mapper Configurations
-            var mapperConfig = new MapperConfiguration(mc =>
-            {
-                mc.AddProfile(new MappingProfile());
-            });
+            var mapperConfig = new MapperConfiguration(mc => { mc.AddProfile(new MappingProfile()); });
 
             IMapper mapper = mapperConfig.CreateMapper();
             services.AddSingleton(mapper);
@@ -148,12 +165,34 @@ namespace BeekeeperBackend
                 app.UseHangfireDashboard();
             }
 
+            if (env.IsProduction())
+            {
+
+                app.Use(async (context, next) =>
+                {
+                    await next();
+                    if (context.Response.StatusCode == 404 &&
+                       !Path.HasExtension(context.Request.Path.Value) &&
+                       !context.Request.Path.Value.StartsWith("/api/"))
+                    {
+                        context.Request.Path = "/index.html";
+                        await next();
+                    }
+                });
+
+                app.UseDefaultFiles(new DefaultFilesOptions { DefaultFileNames = new List<string> { "index.html" } });
+                app.UseFileServer(new FileServerOptions
+                {
+                    FileProvider = new PhysicalFileProvider(
+                        System.IO.Path.Combine(env.ContentRootPath, "frontend")),
+                });
+            }
+
             // app.UseHttpsRedirection();
-
             app.UseRouting();
+            app.UseCors();
 
-            app.UseAuthentication()
-                ;
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

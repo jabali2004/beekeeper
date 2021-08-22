@@ -66,7 +66,10 @@ export class AuthInterceptor implements HttpInterceptor {
     }
 
     // If you are calling an outside domain then do not add the token.
-    if (!request.url.match(environment.API_BASE_PATH)) {
+    if (
+      !request.url.match(environment.API_BASE_PATH) &&
+      !request.url.match(window.location.origin)
+    ) {
       return request;
     }
 

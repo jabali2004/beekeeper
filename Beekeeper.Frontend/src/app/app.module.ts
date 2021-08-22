@@ -46,7 +46,9 @@ export function createTranslateLoader(http: HttpClient) {
 }
 
 const configuration = new Configuration({
-  basePath: environment.API_BASE_PATH
+  basePath: !environment.production
+    ? environment.API_BASE_PATH
+    : window.location.origin
 });
 
 @NgModule({
