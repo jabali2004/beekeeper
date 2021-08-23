@@ -8,12 +8,10 @@ using BeekeeperBackend.Models;
 using BeekeeperBackend.Utils;
 using Hangfire;
 using Hangfire.MySql;
-using Hangfire.SqlServer;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Rewrite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -57,7 +55,7 @@ namespace BeekeeperBackend
                     Scheme = "Bearer"
                 });
 
-                c.AddSecurityRequirement(new OpenApiSecurityRequirement()
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
                 {
                     {
                         new OpenApiSecurityScheme
@@ -69,7 +67,7 @@ namespace BeekeeperBackend
                             },
                             Scheme = "oauth2",
                             Name = "Bearer",
-                            In = ParameterLocation.Header,
+                            In = ParameterLocation.Header
                         },
                         new List<string>()
                     }
@@ -101,7 +99,7 @@ namespace BeekeeperBackend
                 {
                     options.SaveToken = true;
                     options.RequireHttpsMetadata = false;
-                    options.TokenValidationParameters = new TokenValidationParameters()
+                    options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuer = true,
                         ValidateAudience = true,
@@ -118,8 +116,7 @@ namespace BeekeeperBackend
                 QueuePollInterval = TimeSpan.FromSeconds(15),
                 JobExpirationCheckInterval = TimeSpan.FromHours(1),
                 CountersAggregateInterval = TimeSpan.FromMinutes(5),
-                PrepareSchemaIfNecessary = true,
-
+                PrepareSchemaIfNecessary = true
             };
 
             services.AddHangfire(configuration =>
@@ -150,7 +147,7 @@ namespace BeekeeperBackend
             // Auto Mapper Configurations
             var mapperConfig = new MapperConfiguration(mc => { mc.AddProfile(new MappingProfile()); });
 
-            IMapper mapper = mapperConfig.CreateMapper();
+            var mapper = mapperConfig.CreateMapper();
             services.AddSingleton(mapper);
         }
 
@@ -167,13 +164,12 @@ namespace BeekeeperBackend
 
             if (env.IsProduction())
             {
-
                 app.Use(async (context, next) =>
                 {
                     await next();
                     if (context.Response.StatusCode == 404 &&
-                       !Path.HasExtension(context.Request.Path.Value) &&
-                       !context.Request.Path.Value.StartsWith("/api/"))
+                        !Path.HasExtension(context.Request.Path.Value) &&
+                        !context.Request.Path.Value.StartsWith("/api/"))
                     {
                         context.Request.Path = "/index.html";
                         await next();
@@ -184,7 +180,7 @@ namespace BeekeeperBackend
                 app.UseFileServer(new FileServerOptions
                 {
                     FileProvider = new PhysicalFileProvider(
-                        System.IO.Path.Combine(env.ContentRootPath, "frontend")),
+                        Path.Combine(env.ContentRootPath, "frontend"))
                 });
             }
 
@@ -195,10 +191,7 @@ namespace BeekeeperBackend
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
 
             // InitializeDatabase(app);
         }

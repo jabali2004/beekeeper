@@ -1,26 +1,24 @@
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net.Mime;
 using System.Security.Claims;
 using System.Text;
-using System.Linq;
 using System.Threading.Tasks;
-using BeekeeperBackend.Models;
+using AutoMapper;
 using BeekeeperBackend.Data;
+using BeekeeperBackend.Data.Requests;
+using BeekeeperBackend.Data.Responses;
+using BeekeeperBackend.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.AspNetCore.Authorization;
-using AutoMapper;
-using BeekeeperBackend.Data.Responses;
-using BeekeeperBackend.Data.Requests;
-using System.Net.Mime;
 
 namespace BeekeeperBackend.Controllers
 {
-
     // TODO: Refactor and enhance auth controller
     // TODO: Implement roles
     // TODO: Add password restore functionality
@@ -32,14 +30,15 @@ namespace BeekeeperBackend.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IConfiguration _configuration;
-        private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly UserManager<ApplicationUser> _userManager;
         private readonly BeekeeperContext _context;
         private readonly IMapper _mapper;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public AuthController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, BeekeeperContext beekeeperContext,
+        public AuthController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager,
+            BeekeeperContext beekeeperContext,
             IConfiguration configuration, IMapper mapper
-            )
+        )
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -63,9 +62,9 @@ namespace BeekeeperBackend.Controllers
 
                 var authClaims = new List<Claim>
                 {
-                    new Claim(ClaimTypes.Name, user.UserName),
-                    new Claim(ClaimTypes.Email, user.Email),
-                    new Claim(ClaimTypes.NameIdentifier, user.Id),
+                    new(ClaimTypes.Name, user.UserName),
+                    new(ClaimTypes.Email, user.Email),
+                    new(ClaimTypes.NameIdentifier, user.Id)
                 };
 
                 foreach (var userRole in userRoles) authClaims.Add(new Claim(ClaimTypes.Role, userRole));
@@ -73,12 +72,12 @@ namespace BeekeeperBackend.Controllers
                 var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
 
                 var token = new JwtSecurityToken(
-                         issuer: _configuration["JWT:ValidIssuer"],
-                         audience: _configuration["JWT:ValidAudience"],
-                         expires: DateTime.Now.AddHours(3),
-                         claims: authClaims,
-                         signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
-                         );
+                    _configuration["JWT:ValidIssuer"],
+                    _configuration["JWT:ValidAudience"],
+                    expires: DateTime.Now.AddHours(3),
+                    claims: authClaims,
+                    signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
+                );
 
                 return Ok(
                     new
@@ -103,7 +102,6 @@ namespace BeekeeperBackend.Controllers
         {
             var userExists = await _userManager.FindByNameAsync(model.Email);
             if (userExists != null)
-            {
                 return StatusCode(
                     StatusCodes.Status500InternalServerError,
                     new Response
@@ -112,7 +110,6 @@ namespace BeekeeperBackend.Controllers
                         Message = "User already exists!"
                     }
                 );
-            }
 
             // Add the roles if they do not exist
             if (!await _roleManager.RoleExistsAsync(UserRoles.Admin))
@@ -126,20 +123,16 @@ namespace BeekeeperBackend.Controllers
                 Email = model.Email,
                 SecurityStamp = Guid.NewGuid().ToString(),
                 UserName = model.Username,
-                DisplayName = model.DisplayName,
+                DisplayName = model.DisplayName
             };
 
             var result = await _userManager.CreateAsync(user, model.Password);
-            if (!result.Succeeded)
-            {
-                return BadRequest(result);
-            }
+            if (!result.Succeeded) return BadRequest(result);
 
             if (await _roleManager.RoleExistsAsync(UserRoles.User))
                 await _userManager.AddToRoleAsync(user, UserRoles.User);
 
             if (!result.Succeeded)
-            {
                 return StatusCode(
                     StatusCodes.Status500InternalServerError,
                     new Response
@@ -148,7 +141,6 @@ namespace BeekeeperBackend.Controllers
                         Message = "User creation failed! Please check user details and try again."
                     }
                 );
-            }
 
             return Ok(
                 new Response
@@ -165,8 +157,8 @@ namespace BeekeeperBackend.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<UserDTO>> GetUser()
         {
-            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            ApplicationUser user = await _userManager.FindByIdAsync(userId);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await _userManager.FindByIdAsync(userId);
 
             return Ok(_mapper.Map<UserDTO>(user));
         }
@@ -178,23 +170,16 @@ namespace BeekeeperBackend.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IdentityResult))]
         public async Task<ActionResult<UserDTO>> PutUser([FromBody] UpdateUserReq updateUserReq)
         {
-            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            ApplicationUser user = await _userManager.FindByIdAsync(userId);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await _userManager.FindByIdAsync(userId);
 
-            if (updateUserReq.DisplayName != null)
-            {
-                user.DisplayName = updateUserReq.DisplayName;
-            }
+            if (updateUserReq.DisplayName != null) user.DisplayName = updateUserReq.DisplayName;
 
             var result = await _userManager.UpdateAsync(user);
 
-            if (!result.Succeeded)
-            {
-                return BadRequest(result);
-            }
+            if (!result.Succeeded) return BadRequest(result);
 
             return Ok(_mapper.Map<UserDTO>(user));
-
         }
 
         [HttpPut]
@@ -204,8 +189,8 @@ namespace BeekeeperBackend.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IdentityResult))]
         public async Task<ActionResult<UserDTO>> PutUserPassword([FromBody] UpdateUserPasswordReq updateUserPasswordReq)
         {
-            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            ApplicationUser user = await _userManager.FindByIdAsync(userId);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await _userManager.FindByIdAsync(userId);
 
 
             if (updateUserPasswordReq.Password != null)
@@ -213,10 +198,7 @@ namespace BeekeeperBackend.Controllers
                 await _userManager.RemovePasswordAsync(user);
                 var result = await _userManager.AddPasswordAsync(user, updateUserPasswordReq.Password);
 
-                if (!result.Succeeded)
-                {
-                    return BadRequest(result);
-                }
+                if (!result.Succeeded) return BadRequest(result);
             }
 
             return Ok(_mapper.Map<UserDTO>(user));
