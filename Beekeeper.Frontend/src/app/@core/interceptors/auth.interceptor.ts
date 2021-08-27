@@ -39,8 +39,8 @@ export class AuthInterceptor implements HttpInterceptor {
           // Intercept unauthorized request
           case 401:
             // Check if error response is caused by invalid token
-            // FIXME: Error handling
-            // return this.router.navigateByUrl('/auth/logout');
+            this.tokenService.clearToken();
+            return this.router.navigateByUrl('/auth/logout');
             break;
 
           case 403:
