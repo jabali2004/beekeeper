@@ -7,36 +7,37 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="AutoMapper.EF6" Version="2.1.1"/>
-        <PackageReference Include="Hangfire" Version="1.7.24"/>
-        <PackageReference Include="Hangfire.AspNetCore" Version="1.7.24"/>
-        <PackageReference Include="Hangfire.MySqlStorage" Version="2.0.3"/>
-        <PackageReference Include="Hangfire.SqlServer" Version="1.7.24"/>
-        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.9"/>
-        <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.9"/>
-        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.9"/>
+        <PackageReference Include="AutoMapper.EF6" Version="2.1.1" />
+        <PackageReference Include="Hangfire" Version="1.7.24" />
+        <PackageReference Include="Hangfire.AspNetCore" Version="1.7.24" />
+        <PackageReference Include="Hangfire.MySqlStorage" Version="2.0.3" />
+        <PackageReference Include="Hangfire.SqlServer" Version="1.7.24" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.9" />
+        <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.9" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.9" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.9">
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.9"/>
-        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.9"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.9" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.9" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.9">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="5.0.9"/>
-        <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.12.2"/>
-        <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.11.1"/>
-        <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2"/>
-        <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="5.0.1"/>
-        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.5"/>
+        <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="5.0.9" />
+        <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.12.2" />
+        <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.11.1" />
+        <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
+        <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="5.0.1" />
+        <PackageReference Include="Serilog.AspNetCore" Version="4.1.0" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.5" />
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="Migrations"/>
-        <Folder Include="Controllers"/>
-        <Folder Include="Utils"/>
+        <Folder Include="Migrations" />
+        <Folder Include="Controllers" />
+        <Folder Include="Utils" />
     </ItemGroup>
 
 </Project>
