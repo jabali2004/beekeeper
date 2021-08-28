@@ -4,8 +4,8 @@ using System.IO;
 using System.Text;
 using System.Transactions;
 using AutoMapper;
-using BeekeeperBackend.Models;
-using BeekeeperBackend.Utils;
+using Beekeeper.Backend.Models;
+using Beekeeper.Backend.Utils;
 using Hangfire;
 using Hangfire.MySql;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -20,7 +20,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
-namespace BeekeeperBackend
+namespace Beekeeper.Backend
 {
     public class Startup
     {

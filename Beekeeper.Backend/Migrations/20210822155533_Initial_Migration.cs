@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace BeekeeperBackend.Migrations
+namespace Beekeeper.Backend.Migrations
 {
     public partial class Initial_Migration : Migration
     {

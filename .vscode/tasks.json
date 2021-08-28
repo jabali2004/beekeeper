@@ -6,7 +6,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/BeekeeperBackend/BeekeeperBackend.csproj",
+                "${workspaceFolder}/Beekeeper.Backend/Beekeeper.Backend.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -18,7 +18,7 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/BeekeeperBackend/BeekeeperBackend.csproj",
+                "${workspaceFolder}/Beekeeper.Backend/Beekeeper.Backend.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -31,7 +31,7 @@
             "args": [
                 "watch",
                 "run",
-                "${workspaceFolder}/BeekeeperBackend/BeekeeperBackend.csproj",
+                "${workspaceFolder}/Beekeeper.Backend/Beekeeper.Backend.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],

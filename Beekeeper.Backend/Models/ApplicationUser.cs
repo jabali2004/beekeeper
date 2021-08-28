@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 
-namespace BeekeeperBackend.Models
+namespace Beekeeper.Backend.Models
 {
     public class ApplicationUser : IdentityUser
     {

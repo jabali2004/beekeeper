@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace BeekeeperBackend.Data.Requests
+namespace Beekeeper.Backend.Data.Requests
 {
     public class LoginReq
     {

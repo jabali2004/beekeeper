@@ -1,10 +1,10 @@
-﻿using BeekeeperBackend.Models;
+﻿using Beekeeper.Backend.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 #nullable disable
 
-namespace BeekeeperBackend
+namespace Beekeeper.Backend
 {
     public class BeekeeperContext : IdentityDbContext<ApplicationUser>
     {

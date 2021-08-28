@@ -6,10 +6,10 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
-using BeekeeperBackend.Data;
-using BeekeeperBackend.Data.Requests;
-using BeekeeperBackend.Data.Responses;
-using BeekeeperBackend.Models;
+using Beekeeper.Backend.Data;
+using Beekeeper.Backend.Data.Requests;
+using Beekeeper.Backend.Data.Responses;
+using Beekeeper.Backend.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -17,7 +17,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
-namespace BeekeeperBackend.Controllers
+namespace Beekeeper.Backend.Controllers
 {
     // TODO: Refactor and enhance auth controller
     // TODO: Implement roles

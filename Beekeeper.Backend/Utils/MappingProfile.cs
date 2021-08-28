@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using BeekeeperBackend.Data;
-using BeekeeperBackend.Models;
+using Beekeeper.Backend.Data;
+using Beekeeper.Backend.Models;
 
-namespace BeekeeperBackend.Utils
+namespace Beekeeper.Backend.Utils
 {
     public class MappingProfile : Profile
     {

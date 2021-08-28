@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "BeekeeperBackend",
+    "title": "Beekeeper.Backend",
     "version": "v1"
   },
   "paths": {
@@ -326,7 +326,7 @@
             "nullable": true
           }
         },
-        "additionalProperties": { }
+        "additionalProperties": {}
       },
       "RegisterReq": {
         "required": [
@@ -425,7 +425,7 @@
   },
   "security": [
     {
-      "Bearer": [ ]
+      "Bearer": []
     }
   ]
 }

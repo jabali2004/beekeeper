@@ -29,15 +29,15 @@ WORKDIR /app
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS backend-build-stage
 WORKDIR /src
-COPY ["Beekeeper.Backend/BeekeeperBackend.csproj", "Beekeeper.Backend/"]
-RUN dotnet restore "Beekeeper.Backend/BeekeeperBackend.csproj"
+COPY ["Beekeeper.Backend/Beekeeper.Backend.csproj", "Beekeeper.Backend/"]
+RUN dotnet restore "Beekeeper.Backend/Beekeeper.Backend.csproj"
 
 COPY . .
 WORKDIR "/src/Beekeeper.Backend"
-RUN dotnet build "BeekeeperBackend.csproj" -c Release -o /app/build
+RUN dotnet build "Beekeeper.Backend.csproj" -c Release -o /app/build
 
 FROM backend-build-stage AS backend-publish-stage
-RUN dotnet publish "BeekeeperBackend.csproj" -c Release -o /app/publish
+RUN dotnet publish "Beekeeper.Backend.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
@@ -45,5 +45,5 @@ WORKDIR /app
 COPY --from=frontend-build-stage /app/dist/beekeeper-frontend /app/frontend
 COPY --from=backend-publish-stage /app/publish .
 
-ENTRYPOINT ["dotnet", "BeekeeperBackend.dll"]
+ENTRYPOINT ["dotnet", "Beekeeper.Backend.dll"]
 

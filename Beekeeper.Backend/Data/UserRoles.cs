@@ -1,4 +1,4 @@
-namespace BeekeeperBackend.Data
+namespace Beekeeper.Backend.Data
 {
     public class UserRoles
     {

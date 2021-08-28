@@ -7,16 +7,16 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
-COPY ["BeekeeperBackend/BeekeeperBackend.csproj", "BeekeeperBackend/"]
-RUN dotnet restore "BeekeeperBackend/BeekeeperBackend.csproj"
+COPY ["Beekeeper.Backend/Beekeeper.Backend.csproj", "Beekeeper.Backend/"]
+RUN dotnet restore "Beekeeper.Backend/Beekeeper.Backend.csproj"
 COPY . .
-WORKDIR "/src/BeekeeperBackend"
-RUN dotnet build "BeekeeperBackend.csproj" -c Release -o /app/build
+WORKDIR "/src/Beekeeper.Backend"
+RUN dotnet build "Beekeeper.Backend.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "BeekeeperBackend.csproj" -c Release -o /app/publish
+RUN dotnet publish "Beekeeper.Backend.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "BeekeeperBackend.dll"]
+ENTRYPOINT ["dotnet", "Beekeeper.Backend.dll"]

@@ -9,7 +9,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/BeekeeperBackend/bin/Debug/net5.0/BeekeeperBackend.dll",
+            "program": "${workspaceFolder}/Beekeeper.Backend/bin/Debug/net5.0/Beekeeper.Backend.dll",
             "args": [],
             "cwd": "${workspaceFolder}",
             "stopAtEntry": false,
@@ -22,7 +22,7 @@
                 "ASPNETCORE_ENVIRONMENT": "Development"
             },
             "sourceFileMap": {
-                "/Views": "${workspaceFolder}/BeekeeperBackend/Views"
+                "/Views": "${workspaceFolder}/Beekeeper.Backend/Views"
             }
         },
         {

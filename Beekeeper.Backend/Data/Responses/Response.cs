@@ -1,4 +1,4 @@
-namespace BeekeeperBackend.Data.Responses
+namespace Beekeeper.Backend.Data.Responses
 {
     public class Response
     {

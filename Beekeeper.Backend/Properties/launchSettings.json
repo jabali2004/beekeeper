@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "BeekeeperBackend": {
+    "Beekeeper.Backend": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "swagger",
