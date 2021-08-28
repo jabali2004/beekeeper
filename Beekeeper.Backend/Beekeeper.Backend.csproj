@@ -4,6 +4,8 @@
         <TargetFramework>net5.0</TargetFramework>
         <UserSecretsId>21ff1464-995b-4b9f-b649-6616a26129bf</UserSecretsId>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+        <AssemblyName>Beekeeper.Backend</AssemblyName>
+        <RootNamespace>Beekeeper.Backend</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>

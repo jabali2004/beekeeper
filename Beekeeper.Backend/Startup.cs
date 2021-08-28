@@ -43,7 +43,7 @@ namespace BeekeeperBackend
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "BeekeeperBackend", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Beekeeper.Backend", Version = "v1" });
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Description = @"JWT Authorization header using the Bearer scheme. \r\n\r\n 
@@ -158,7 +158,7 @@ namespace BeekeeperBackend
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "BeekeeperBackend v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Beekeeper.Backend v1"));
                 app.UseHangfireDashboard();
             }
 
