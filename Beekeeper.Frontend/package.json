@@ -42,7 +42,7 @@
     "graphql": "^15.5.1",
     "graphql-tag": "^2.12.5",
     "jwt-decode": "^3.1.2",
-    "ngx-scrollbar": "^7.6.1",
+    "ngx-scrollbar": "^8.0.0",
     "rxjs": "~7.3.0",
     "tslib": "^2.3.1",
     "turndown": "^7.1.1",
