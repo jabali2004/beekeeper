@@ -18,6 +18,9 @@ namespace Beekeeper.Backend
         {
         }
 
+        public DbSet<Worker> Workers { get; set; }
+        public DbSet<WorkerConnection> WorkerConnections { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
