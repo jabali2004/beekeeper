@@ -39,8 +39,8 @@ export class AuthInterceptor implements HttpInterceptor {
           // Intercept unauthorized request
           case 401:
             // Check if error response is caused by invalid token
-            this.tokenService.clearToken();
-            return this.router.navigateByUrl('/auth/logout');
+            // this.tokenService.clearToken();
+            // return this.router.navigateByUrl('/auth/logout');
             break;
 
           case 403:
@@ -53,7 +53,7 @@ export class AuthInterceptor implements HttpInterceptor {
             break;
         }
 
-        return of(error);
+        throw new HttpErrorResponse(error);
       })
     ) as Observable<HttpEvent<any>>;
   }

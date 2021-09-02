@@ -60,7 +60,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     this.authService
       .login(this.authLoginReq.email, this.authLoginReq.password)
-      .then(() => {
+      .then((res) => {
         this.submitted = false;
         if (this.authService.isAuthenticated) {
           this.router.navigateByUrl('/pages');
@@ -68,34 +68,10 @@ export class LoginComponent implements OnInit, OnDestroy {
       })
       .catch((err: HttpErrorResponse) => {
         this.submitted = false;
-        console.log(err);
-        if (err.status === 400) {
-          switch (err.error.data[0].messages[0].id) {
-            // Check if email is confirmed
-            case 'Auth.form.error.confirmed':
-              this.errors.push(
-                this.translate.instant('errors.auth.login.email_verification')
-              );
-              break;
 
-            // Check if user has been blocked
-            case 'Auth.form.error.blocked':
-              this.errors.push(
-                this.translate.instant('errors.auth.login.account_blocked')
-              );
-              break;
-
-            default:
-              this.errors.push(
-                this.translate.instant('errors.auth.login.password_or_email')
-              );
-              break;
-          }
-        } else {
-          this.errors.push(
-            this.translate.instant('errors.auth.login.undefined')
-          );
-        }
+        this.errors.push(
+          this.translate.instant('errors.auth.login.password_or_email')
+        );
       });
   }
 }

@@ -7,8 +7,6 @@ import { environment } from 'src/environments/environment';
 
 import {
   AuthService as ApiAuthService,
-  IRegisterReq,
-  IUserDTO,
   LoginReq,
   RegisterReq,
   UpdateUserPasswordReq,
@@ -65,11 +63,10 @@ export class AuthService {
    * and store jwt token and user data
    */
   public async login(email: string, password: string): Promise<void> {
+    const loginReq = new LoginReq({ email, password });
+
     const res: { token: string } | HttpErrorResponse = await lastValueFrom(
-      this.authService.apiAuthLoginPost({
-        email,
-        password
-      } as LoginReq)
+      this.authService.apiAuthLoginPost(loginReq)
     );
 
     if (res) {
