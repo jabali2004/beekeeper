@@ -89,7 +89,11 @@ namespace Beekeeper.Backend.Controllers
                 );
             }
 
-            return Unauthorized();
+            return Unauthorized(new Response()
+            {
+                Status = "Unauthorized",
+                Message = "Unable to authenticate user!"
+            });
         }
 
         [AllowAnonymous]
