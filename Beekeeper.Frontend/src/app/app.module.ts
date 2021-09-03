@@ -58,6 +58,7 @@ const configuration = new Configuration({
     AppRoutingModule,
     HttpClientModule,
     ApiModule.forRoot(() => configuration),
+    GraphQLModule,
     CoreModule.forRoot(),
     BrowserAnimationsModule,
     NbThemeModule.forRoot({ name: 'dark' }),
