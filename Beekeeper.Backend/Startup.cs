@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Text;
 using System.Transactions;
 using AutoMapper;
@@ -8,6 +7,10 @@ using Beekeeper.Backend.Models;
 using Beekeeper.Backend.Utils;
 using Hangfire;
 using Hangfire.MySql;
+using HotChocolate;
+using HotChocolate.AspNetCore;
+using HotChocolate.AspNetCore.Playground;
+using HotChocolate.Execution.Options;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -19,6 +22,7 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Path = System.IO.Path;
 
 namespace Beekeeper.Backend
 {
@@ -30,7 +34,7 @@ namespace Beekeeper.Backend
             StaticConfig = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+        private IConfiguration Configuration { get; }
         public static IConfiguration StaticConfig { get; private set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -39,9 +43,8 @@ namespace Beekeeper.Backend
             var dbConnectionString = Configuration.GetConnectionString("DefaultConnection");
 
             services.AddDbContext<BeekeeperContext>(options =>
-                options.UseMySql(dbConnectionString, ServerVersion.AutoDetect(dbConnectionString)));
-
-            services.AddControllers();
+                    options.UseMySql(dbConnectionString, ServerVersion.AutoDetect(dbConnectionString)),
+                ServiceLifetime.Transient);
 
             services.AddSwaggerGen(c =>
             {
@@ -118,7 +121,10 @@ namespace Beekeeper.Backend
                 QueuePollInterval = TimeSpan.FromSeconds(15),
                 JobExpirationCheckInterval = TimeSpan.FromHours(1),
                 CountersAggregateInterval = TimeSpan.FromMinutes(5),
-                PrepareSchemaIfNecessary = true
+                PrepareSchemaIfNecessary = true,
+                DashboardJobListLimit = 50000,
+                TransactionTimeout = TimeSpan.FromMinutes(1),
+                TablesPrefix = "Hangfire"
             };
 
             services.AddHangfire(configuration =>
@@ -126,17 +132,7 @@ namespace Beekeeper.Backend
                 configuration.UseStorage(
                     new MySqlStorage(
                         dbConnectionString,
-                        new MySqlStorageOptions
-                        {
-                            TransactionIsolationLevel = IsolationLevel.ReadCommitted,
-                            QueuePollInterval = TimeSpan.FromSeconds(15),
-                            JobExpirationCheckInterval = TimeSpan.FromHours(1),
-                            CountersAggregateInterval = TimeSpan.FromMinutes(5),
-                            PrepareSchemaIfNecessary = true,
-                            DashboardJobListLimit = 50000,
-                            TransactionTimeout = TimeSpan.FromMinutes(1),
-                            TablesPrefix = "Hangfire"
-                        }
+                        mysqlStorageOptions
                     )
                 );
             });
@@ -144,7 +140,17 @@ namespace Beekeeper.Backend
             // Add the processing server as IHostedService
             services.AddHangfireServer();
 
+            services
+                .AddGraphQLServer()
+                .AddQueryType<Query>()
+                .AddFiltering()
+                .AddSorting()
+                // Enable tracing with HTTP Header => { "GraphQL-Tracing":"1" } | Playground JSON
+                .AddApolloTracing(TracingPreference.OnDemand);
+
             services.AddHttpContextAccessor();
+
+            services.AddControllers();
 
             // Auto Mapper Configurations
             var mapperConfig = new MapperConfiguration(mc => { mc.AddProfile(new MappingProfile()); });
@@ -162,6 +168,10 @@ namespace Beekeeper.Backend
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Beekeeper.Backend v1"));
                 app.UseHangfireDashboard();
+
+                // Use GraphQL Playground
+                app.UsePlayground(
+                    new PlaygroundOptions() { Path = "/playground", QueryPath = "/graphql" });
             }
 
             if (env.IsProduction())
@@ -193,7 +203,11 @@ namespace Beekeeper.Backend
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+                endpoints.MapGraphQL("/graphql");
+            });
 
             // InitializeDatabase(app);
         }

@@ -11,6 +11,7 @@ namespace Beekeeper.Backend.Models
         [Required] public Worker Worker { get; set; }
 
         [Column(TypeName = "varchar(256)")] public string Address { get; set; }
+
         public bool Failed { get; set; } = false;
 
         public DateTime ConnectedAt { get; set; }

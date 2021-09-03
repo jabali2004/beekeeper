@@ -89,7 +89,7 @@ namespace Beekeeper.Backend.Controllers
                 );
             }
 
-            return Unauthorized(new Response()
+            return Unauthorized(new Response
             {
                 Status = "Unauthorized",
                 Message = "Unable to authenticate user!"

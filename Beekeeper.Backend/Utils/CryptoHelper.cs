@@ -1,11 +1,9 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 using Microsoft.Extensions.Configuration;
 using Serilog;
-
 
 namespace Beekeeper.Backend.Utils
 {
@@ -24,7 +22,7 @@ namespace Beekeeper.Backend.Utils
 
 
         /// <summary>
-        /// Generate secure string which could be used for passwords
+        ///     Generate secure string which could be used for passwords
         /// </summary>
         /// <param name="length"></param>
         /// <param name="numberOfNonAlphanumericCharacters"></param>
@@ -32,15 +30,10 @@ namespace Beekeeper.Backend.Utils
         /// <exception cref="ArgumentException"></exception>
         public static string Generate(int length, int numberOfNonAlphanumericCharacters)
         {
-            if (length < 1 || length > 128)
-            {
-                throw new ArgumentException(nameof(length));
-            }
+            if (length < 1 || length > 128) throw new ArgumentException(nameof(length));
 
             if (numberOfNonAlphanumericCharacters > length || numberOfNonAlphanumericCharacters < 0)
-            {
                 throw new ArgumentException(nameof(numberOfNonAlphanumericCharacters));
-            }
 
             using (var rng = RandomNumberGenerator.Create())
             {
@@ -74,10 +67,7 @@ namespace Beekeeper.Backend.Utils
                     }
                 }
 
-                if (count >= numberOfNonAlphanumericCharacters)
-                {
-                    return new string(characterBuffer);
-                }
+                if (count >= numberOfNonAlphanumericCharacters) return new string(characterBuffer);
 
                 int j;
                 var rand = new Random();
@@ -99,7 +89,7 @@ namespace Beekeeper.Backend.Utils
 
 
         /// <summary>
-        /// Decrypt encrypted string using aes
+        ///     Decrypt encrypted string using aes
         /// </summary>
         /// <param name="encrypted"></param>
         /// <returns></returns>
@@ -116,22 +106,22 @@ namespace Beekeeper.Backend.Utils
 
             try
             {
-                byte[] base64 = Convert.FromBase64String(encrypted);
+                var base64 = Convert.FromBase64String(encrypted);
                 string plaintext = null;
 
-                using Aes aesAlg = Aes.Create();
+                using var aesAlg = Aes.Create();
                 aesAlg.Key = Key;
                 aesAlg.IV = Iv;
 
                 // Create a decryptor to perform the stream transform.
-                ICryptoTransform decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
+                var decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
 
                 // Create the streams used for decryption.
-                using (MemoryStream memoryStream = new MemoryStream(base64))
+                using (var memoryStream = new MemoryStream(base64))
                 {
-                    using (CryptoStream cryptoStream = new CryptoStream(memoryStream, decryptor, CryptoStreamMode.Read))
+                    using (var cryptoStream = new CryptoStream(memoryStream, decryptor, CryptoStreamMode.Read))
                     {
-                        using (StreamReader streamReader = new StreamReader(cryptoStream))
+                        using (var streamReader = new StreamReader(cryptoStream))
                         {
                             // Read the decrypted bytes from the decrypting stream and
                             // place them in a string.
@@ -150,7 +140,7 @@ namespace Beekeeper.Backend.Utils
         }
 
         /// <summary>
-        /// Encrypt string using aes
+        ///     Encrypt string using aes
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
@@ -169,21 +159,21 @@ namespace Beekeeper.Backend.Utils
             {
                 byte[] encrypted;
 
-                using (Aes aesAlg = Aes.Create())
+                using (var aesAlg = Aes.Create())
                 {
                     aesAlg.Key = Key;
                     aesAlg.IV = Iv;
 
                     // Create an encryptor to perform the stream transform.
-                    ICryptoTransform encryptor = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
+                    var encryptor = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
 
                     // Create the streams used for encryption.
-                    using (MemoryStream memStream = new MemoryStream())
+                    using (var memStream = new MemoryStream())
                     {
-                        using (CryptoStream cryptoStream =
+                        using (var cryptoStream =
                             new CryptoStream(memStream, encryptor, CryptoStreamMode.Write))
                         {
-                            using (StreamWriter streamWriter = new StreamWriter(cryptoStream))
+                            using (var streamWriter = new StreamWriter(cryptoStream))
                             {
                                 streamWriter.Write(input);
                             }
