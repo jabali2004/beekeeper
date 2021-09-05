@@ -16,19 +16,30 @@
       <nb-list-item
         *ngFor="let worker of workers | paginate: { itemsPerPage: pageSize, currentPage: currentPage, totalItems: totalCount }">
         <div class="w-100 d-inline-flex justify-content-between">
-          <span>{{ worker.name }}</span>
+          <span>
+            {{ worker.name }}
+
+            <nb-tag-list class="ms-1">
+              <nb-tag size="tiny" appearance="outline" status="success" *ngIf="worker.online"
+                [text]="'worker.online' | translate">
+              </nb-tag>
+              <nb-tag size="tiny" appearance="outline" status="danger" *ngIf="!worker.online"
+                [text]="'worker.offline' | translate">
+              </nb-tag>
+            </nb-tag-list>
+          </span>
           <nb-actions>
             <nb-action>
               <nb-icon icon="settings-2-outline">Edit</nb-icon>
             </nb-action>
 
-            <nb-action>
-              <nb-icon icon="close-circle-outline">Delete</nb-icon>
+            <nb-action (click)="deleteWorker(worker.id)">
+              <nb-icon status="danger" icon="close-circle-outline">Delete</nb-icon>
             </nb-action>
 
-            <nb-action>
-              <nb-icon icon="pause-circle-outline">Pause</nb-icon>
-              <!-- <nb-icon icon="play-circle-outline">Play</nb-icon> -->
+            <nb-action (click)="changeWorkerState(worker.id)">
+              <nb-icon *ngIf="worker.disabled" status="warning" icon="pause-circle-outline">Pause</nb-icon>
+              <nb-icon *ngIf="!worker.disabled" status="success" icon="play-circle-outline">Play</nb-icon>
             </nb-action>
           </nb-actions>
         </div>

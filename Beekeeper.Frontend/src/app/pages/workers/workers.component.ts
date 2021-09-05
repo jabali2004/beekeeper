@@ -22,19 +22,44 @@ export class WorkersComponent implements OnInit {
           id
           description
           name
+          disabled
+          online
+          createdAt
+          updatedAt
         }
       }
     }
   `;
 
-  public workers: Worker[];
+  private workerByIdQuery = gql`
+    query GetWorker($id: Uuid!) {
+      workers(where: { id: { eq: $id } }) {
+        totalCount
+        pageInfo {
+          hasPreviousPage
+          hasNextPage
+        }
+        items {
+          id
+          description
+          name
+          disabled
+          online
+          createdAt
+          updatedAt
+        }
+      }
+    }
+  `;
+
+  public workers: Worker[] = [];
 
   // Pagination
   public totalCount: number;
   public currentPage = 1;
   public pageSize = 10;
 
-  private query: QueryRef<{ take: number; skip: number }>;
+  public query: QueryRef<{ take: number; skip: number }>;
 
   constructor(private apollo: Apollo) {}
 
@@ -43,25 +68,47 @@ export class WorkersComponent implements OnInit {
   }
 
   public queryWorkers(take: number, skip: number) {
-    this.apollo
-      .query({
-        query: this.workersQuery,
-        variables: {
-          take,
-          skip
-        }
-      })
-      .subscribe((res: any) => {
-        if (res.data) {
-          const workers = res.data.workers as PagedResponse<Worker>;
-          this.workers = workers.items;
-          this.totalCount = workers.totalCount;
-        }
-      });
+    this.query = this.apollo.watchQuery({
+      query: this.workersQuery,
+      variables: {
+        take,
+        skip
+      }
+    });
+
+    this.query.valueChanges.subscribe((res: any) => {
+      if (res.data) {
+        const workers = res.data.workers as PagedResponse<Worker>;
+        this.workers = workers.items;
+        this.totalCount = workers.totalCount;
+      }
+    });
   }
 
-  public createWorker() {
-    console.log('not implemented yet');
+  public queryWorkerById(id: string) {
+    this.apollo
+      .query({
+        query: this.workerByIdQuery,
+        variables: {
+          id
+        },
+        fetchPolicy: 'network-only'
+      })
+      .subscribe();
+  }
+
+  public createWorker() {}
+
+  public deleteWorker(id: string) {
+    console.log(id);
+  }
+
+  public changeWorkerState(id: string) {
+    const worker: Worker = this.workers.find((w) => w.id === id);
+
+    console.log(worker);
+    this.queryWorkerById(id);
+    // worker.disabled = !worker.disabled;
   }
 
   public paginate(page: number) {

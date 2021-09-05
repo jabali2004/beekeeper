@@ -7,7 +7,8 @@ import {
   NbActionsModule,
   NbCardModule,
   NbIconModule,
-  NbListModule
+  NbListModule,
+  NbTagModule
 } from '@nebular/theme';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -30,6 +31,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     NbCardModule,
     NbListModule,
     NbActionsModule,
+    NbTagModule,
     NgxPaginationModule
   ]
 })

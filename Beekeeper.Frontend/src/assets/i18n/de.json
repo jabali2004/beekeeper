@@ -294,5 +294,9 @@
     "next": "Vor",
     "previous": "Zurück"
   },
-  "title": "Beekeeper"
+  "title": "Beekeeper",
+  "worker": {
+    "offline": "Offline",
+    "online": "Online"
+  }
 }
