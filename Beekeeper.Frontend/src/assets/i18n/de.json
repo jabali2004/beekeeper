@@ -285,7 +285,14 @@
   "pages": {
     "home": {
       "title": "Home"
+    },
+    "workers": {
+      "title": "Workers"
     }
+  },
+  "pagination": {
+    "next": "Vor",
+    "previous": "Zurück"
   },
   "title": "Beekeeper"
 }

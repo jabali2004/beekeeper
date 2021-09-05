@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-one-column-layout',
   styleUrls: ['./one-column.layout.scss'],
   template: `
-    <nb-layout>
+    <nb-layout windowMode>
       <nb-layout-header fixed>
         <app-header></app-header>
       </nb-layout-header>

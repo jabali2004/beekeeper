@@ -20,6 +20,12 @@ const routes: Routes = [
           import('./home/home.module').then((m) => m.HomeModule)
       },
       {
+        path: 'workers',
+        pathMatch: 'full',
+        loadChildren: () =>
+          import('./workers/workers.module').then((m) => m.WorkersModule)
+      },
+      {
         path: 'profile',
         pathMatch: 'full',
         loadChildren: () =>

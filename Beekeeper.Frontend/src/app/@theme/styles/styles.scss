@@ -66,6 +66,60 @@
 
   // Card
   nb-card {
-    //   background: nb-theme(background-basic-color-4) !important;
+    // background: nb-theme(background-basic-color-4) !important;
+  }
+
+  .pagination .ngx-pagination {
+
+    & {
+      margin: 0rem;
+    }
+
+    @media screen and (max-width: 601px) {
+      & .small-screen {
+        border-radius: 2rem;
+        padding: 0.2rem 0.5rem 0.1rem 0.5rem;
+      }
+    }
+
+    & li {
+      border-radius: 2rem;
+      margin: 0rem 0.25rem;
+
+      a {
+        color: nb-theme(text-basic-color);
+        border-radius: 2rem;
+        padding: 0.2rem 0.5rem 0.1rem 0.5rem;
+        text-decoration: none;
+      }
+
+      a:hover {
+        background: nb-theme(color-basic-transparent-hover);
+      }
+
+      &:hover {
+        background: nb-theme(color-basic-transparent-hover);
+      }
+    }
+
+    & li.pagination-previous {
+      color: nb-theme(text-basic-color);
+      border-radius: 2rem;
+    }
+
+    & li.pagination-next {
+      color: nb-theme(text-basic-color);
+      border-radius: 2rem;
+    }
+
+    & li.current {
+      padding: 0.2rem 0.5rem 0.1rem 0.5rem;
+      background: nb-theme(color-basic-transparent-hover);
+      color: nb-theme(text-basic-color);
+
+      &:hover {
+        background: nb-theme(color-basic-transparent-hover);
+      }
+    }
   }
 }

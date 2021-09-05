@@ -30,6 +30,7 @@ export class PagesComponent implements OnInit {
     private translateService: TranslateService
   ) {
     this.translateService.instant('pages.home.title');
+    this.translateService.instant('pages.workers.title');
 
     router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {

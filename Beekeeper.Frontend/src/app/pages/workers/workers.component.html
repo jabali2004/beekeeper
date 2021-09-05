@@ -1,0 +1,43 @@
+<nb-card>
+  <nb-card-header>
+    <div class="w-100 d-inline-flex justify-content-between">
+      <h2>{{ 'pages.workers.title' | translate }}</h2>
+      <nb-actions>
+        <nb-action (click)="createWorker()" style="cursor: pointer;">
+          <nb-icon style="font-size: 2rem;" icon="plus-circle-outline" status="success">
+          </nb-icon>
+        </nb-action>
+      </nb-actions>
+
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <nb-list>
+      <nb-list-item
+        *ngFor="let worker of workers | paginate: { itemsPerPage: pageSize, currentPage: currentPage, totalItems: totalCount }">
+        <div class="w-100 d-inline-flex justify-content-between">
+          <span>{{ worker.name }}</span>
+          <nb-actions>
+            <nb-action>
+              <nb-icon icon="settings-2-outline">Edit</nb-icon>
+            </nb-action>
+
+            <nb-action>
+              <nb-icon icon="close-circle-outline">Delete</nb-icon>
+            </nb-action>
+
+            <nb-action>
+              <nb-icon icon="pause-circle-outline">Pause</nb-icon>
+              <!-- <nb-icon icon="play-circle-outline">Play</nb-icon> -->
+            </nb-action>
+          </nb-actions>
+        </div>
+      </nb-list-item>
+    </nb-list>
+  </nb-card-body>
+  <nb-card-footer>
+    <pagination-controls class="mx-auto pagination" (pageChange)="paginate($event)" responsive="true"
+      [previousLabel]="'pagination.previous' | translate" [nextLabel]="'pagination.next' | translate">
+    </pagination-controls>
+  </nb-card-footer>
+</nb-card>
