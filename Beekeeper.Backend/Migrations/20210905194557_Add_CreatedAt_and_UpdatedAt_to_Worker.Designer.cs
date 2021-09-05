@@ -3,14 +3,16 @@ using System;
 using Beekeeper.Backend;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Beekeeper.Backend.Migrations
 {
     [DbContext(typeof(BeekeeperContext))]
-    partial class BeekeeperContextModelSnapshot : ModelSnapshot
+    [Migration("20210905194557_Add_CreatedAt_and_UpdatedAt_to_Worker")]
+    partial class Add_CreatedAt_and_UpdatedAt_to_Worker
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

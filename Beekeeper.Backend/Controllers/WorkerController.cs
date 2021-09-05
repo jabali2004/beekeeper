@@ -89,6 +89,10 @@ namespace Beekeeper.Backend.Controllers
             else
                 return BadRequest(new Response { Message = "LoginKey is missing!", Status = "BadRequest" });
 
+            DateTime currentDateTime = DateTime.Now;
+            worker.CreatedAt = currentDateTime;
+            worker.UpdatedAt = currentDateTime;
+
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetWorker", new { worker.Id }, _mapper.Map<Worker>(worker));

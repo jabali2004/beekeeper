@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Transactions;
 using AutoMapper;
@@ -7,10 +8,9 @@ using Beekeeper.Backend.Models;
 using Beekeeper.Backend.Utils;
 using Hangfire;
 using Hangfire.MySql;
-using HotChocolate;
 using HotChocolate.AspNetCore;
 using HotChocolate.AspNetCore.Playground;
-using HotChocolate.Execution.Options;
+using HotChocolate.Types.Pagination;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -22,7 +22,6 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Path = System.IO.Path;
 
 namespace Beekeeper.Backend
 {
@@ -145,8 +144,12 @@ namespace Beekeeper.Backend
                 .AddQueryType<Query>()
                 .AddFiltering()
                 .AddSorting()
+                .SetPagingOptions(new PagingOptions
+                {
+                    IncludeTotalCount = true
+                })
                 // Enable tracing with HTTP Header => { "GraphQL-Tracing":"1" } | Playground JSON
-                .AddApolloTracing(TracingPreference.OnDemand);
+                .AddApolloTracing();
 
             services.AddHttpContextAccessor();
 
@@ -171,7 +174,7 @@ namespace Beekeeper.Backend
 
                 // Use GraphQL Playground
                 app.UsePlayground(
-                    new PlaygroundOptions() { Path = "/playground", QueryPath = "/graphql" });
+                    new PlaygroundOptions { Path = "/playground", QueryPath = "/graphql" });
             }
 
             if (env.IsProduction())
@@ -206,7 +209,7 @@ namespace Beekeeper.Backend
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.MapGraphQL("/graphql");
+                endpoints.MapGraphQL();
             });
 
             // InitializeDatabase(app);
