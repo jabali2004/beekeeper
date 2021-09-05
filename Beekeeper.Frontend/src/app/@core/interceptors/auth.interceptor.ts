@@ -38,6 +38,10 @@ export class AuthInterceptor implements HttpInterceptor {
         switch (error.status) {
           // Intercept unauthorized request
           case 401:
+            if (!error.url.match('/login') && !error.url.match('/register')) {
+              this.tokenService.clearToken();
+              return this.router.navigateByUrl('/auth/logout');
+            }
             // Check if error response is caused by invalid token
             // this.tokenService.clearToken();
             // return this.router.navigateByUrl('/auth/logout');
