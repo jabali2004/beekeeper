@@ -32,7 +32,7 @@ export class WorkersComponent implements OnInit {
   // Pagination
   public totalCount: number;
   public currentPage = 1;
-  public pageSize = 1;
+  public pageSize = 10;
 
   private query: QueryRef<{ take: number; skip: number }>;
 
