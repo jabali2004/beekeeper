@@ -123,6 +123,9 @@ namespace Beekeeper.Backend.Controllers
             if (!await _roleManager.RoleExistsAsync(UserRoles.User))
                 await _roleManager.CreateAsync(new IdentityRole(UserRoles.User));
 
+            if (!await _roleManager.RoleExistsAsync(UserRoles.Worker))
+                await _roleManager.CreateAsync(new IdentityRole(UserRoles.Worker));
+
             var user = new ApplicationUser
             {
                 Email = model.Email,
@@ -191,19 +194,30 @@ namespace Beekeeper.Backend.Controllers
         [Route("profile/password")]
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IdentityResult))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(Response))]
         public async Task<ActionResult<UserDTO>> PutUserPassword([FromBody] UpdateUserPasswordReq updateUserPasswordReq)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await _userManager.FindByIdAsync(userId);
 
-
-            if (updateUserPasswordReq.Password != null)
+            if (updateUserPasswordReq.Password != null &&
+                await _userManager.CheckPasswordAsync(user, updateUserPasswordReq.OldPassword))
             {
                 await _userManager.RemovePasswordAsync(user);
                 var result = await _userManager.AddPasswordAsync(user, updateUserPasswordReq.Password);
 
                 if (!result.Succeeded) return BadRequest(result);
+            }
+            else
+            {
+                return StatusCode(
+                    StatusCodes.Status403Forbidden,
+                    new Response
+                    {
+                        Status = "Error",
+                        Message = "Old user password does not match!"
+                    }
+                );
             }
 
             return Ok(_mapper.Map<UserDTO>(user));

@@ -103,6 +103,11 @@
             "placeholder": "Nachname",
             "required_message": "Ein Nachname wird benötigt!"
           },
+          "old_password": {
+            "label": "Altes Passwort:",
+            "placeholder": "Altes Passwort",
+            "required_message": "Das alte Passwort wird benötigt!"
+          },
           "password": {
             "label": "Passwort:",
             "min_length_message": "Das Passwort sollte zwischen {{min}} und {{max}} Zeichen enthalten.",
@@ -128,7 +133,7 @@
       },
       "messages": {
         "error": "Es ist ein Fehler aufgetreten!",
-        "success": "Erfolgreich registriert!"
+        "success": "Erfolgreich aktualisiert!"
       }
     },
     "register": {

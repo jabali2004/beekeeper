@@ -103,6 +103,11 @@
             "placeholder": "Lastname",
             "required_message": "Lastname is required!"
           },
+          "old_password": {
+            "label": "Old password:",
+            "placeholder": "Old password",
+            "required_message": "Old password is required!"
+          },
           "password": {
             "label": "Password:",
             "min_length_message": "Password should contain from {{min}} to {{max}} characters",

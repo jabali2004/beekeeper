@@ -1,8 +1,12 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { NbIconLibraries } from '@nebular/theme';
+import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from 'src/app/@core/services/auth/auth.service';
+import { NotificationService } from 'src/app/@core/services/notification.service';
 import {
+  IdentityResult,
   UpdateUserPasswordReq,
   UpdateUserReq,
   UserDTO
@@ -21,6 +25,7 @@ export class ProfileComponent implements OnInit {
   });
 
   passwordForm: FormGroup = new FormBuilder().group({
+    old_password: new FormControl(),
     password: new FormControl(),
     rePass: new FormControl()
   });
@@ -31,6 +36,7 @@ export class ProfileComponent implements OnInit {
     displayName: null,
     email: null,
     userName: null,
+    oldPassword: null,
     password: null,
     password_confirmation: null,
     provider: null
@@ -58,7 +64,9 @@ export class ProfileComponent implements OnInit {
   };
 
   constructor(
-    protected authService: AuthService,
+    private authService: AuthService,
+    private notificationService: NotificationService,
+    private translate: TranslateService,
     public iconPack: NbIconLibraries
   ) {}
 
@@ -71,6 +79,7 @@ export class ProfileComponent implements OnInit {
         displayName: this.oldUserObj.displayName,
         userName: this.oldUserObj.userName,
         email: this.oldUserObj.email,
+        oldPassword: null,
         password: null,
         password_confirmation: null,
         provider: null
@@ -83,6 +92,7 @@ export class ProfileComponent implements OnInit {
         displayName: this.oldUserObj.displayName,
         userName: this.oldUserObj.userName,
         email: this.oldUserObj.email,
+        oldPassword: null,
         password: null,
         password_confirmation: null,
         provider: null
@@ -124,10 +134,24 @@ export class ProfileComponent implements OnInit {
       return;
     }
 
-    this.authService.updateProfilePassword(updateRequest).then(() => {
-      this.passwordSubmitted = false;
-      this.passwordForm.controls.password.reset();
-      this.passwordForm.controls.rePass.reset();
-    });
+    this.authService
+      .updateProfilePassword(updateRequest)
+      .then(() => {
+        this.passwordSubmitted = false;
+        this.passwordForm.controls.password.reset();
+        this.passwordForm.controls.rePass.reset();
+        this.passwordForm.controls.old_password.reset();
+      })
+      .catch((err: HttpErrorResponse) => {
+        this.notificationService.show(
+          this.translate.instant('auth.profile.messages.error'),
+          err?.error?.message,
+          'danger'
+        );
+
+        this.passwordSubmitted = false;
+        this.passwordForm.controls.password.reset();
+        this.passwordForm.controls.rePass.reset();
+      });
   }
 }
