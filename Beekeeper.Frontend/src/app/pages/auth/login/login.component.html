@@ -41,9 +41,9 @@
       <label class="label" for="input-password">
         {{ 'auth.login.form.input.password.label' | translate }}
       </label>
-      <a class="forgot-password caption-2" routerLink="../request-password">
+      <!-- <a class="forgot-password caption-2" routerLink="../request-password">
         {{ 'auth.login.form.input.password.forgot_message' | translate }}
-      </a>
+      </a> -->
     </span>
     <input nbInput fullWidth [(ngModel)]="authLoginReq.password" #password="ngModel" name="password" type="password"
       id="input-password" placeholder="{{ 'auth.login.form.input.password.placeholder' | translate }}" fieldSize="large"
