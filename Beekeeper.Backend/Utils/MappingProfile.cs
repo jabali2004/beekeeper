@@ -15,14 +15,12 @@ namespace Beekeeper.Backend.Utils
 
             // Worker
             CreateMap<Worker, WorkerDTO>();
-            CreateMap<List<Worker>, List<Worker>>();
 
             CreateMap<CreateWorkerReq, Worker>();
             CreateMap<UpdateWorkerReq, Worker>();
 
             // WorkerConnection
             CreateMap<WorkerConnection, WorkerConnectionDTO>();
-            CreateMap<List<WorkerConnection>, List<WorkerConnectionDTO>>();
         }
     }
 }

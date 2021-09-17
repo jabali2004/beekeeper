@@ -30,16 +30,17 @@ namespace Beekeeper.Backend.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<WorkerDTO>>> GetWorkers()
         {
-            var workers = await _context.Workers.ToListAsync();
+            List<Worker> workers = await _context.Workers.ToListAsync();
 
             return Ok(_mapper.Map<List<WorkerDTO>>(workers));
         }
 
         // GET: api/Worker/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<WorkerDTO>> GetWorker(Guid id)
+        public async Task<ActionResult<WorkerDTO>> GetWorker(string id)
         {
-            var worker = await _context.Workers.FindAsync(id);
+            Guid guid = Guid.Parse(id);
+            var worker = await _context.Workers.FirstOrDefaultAsync(worker => worker.Id == guid);
 
             if (worker == null) return NotFound();
 
@@ -49,19 +50,32 @@ namespace Beekeeper.Backend.Controllers
         // PUT: api/Worker/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<ActionResult<WorkerDTO>> PutWorker(Guid id, UpdateWorkerReq updatedWorker)
+        public async Task<ActionResult<WorkerDTO>> PutWorker(string id, UpdateWorkerReq updatedWorker)
         {
+            Guid guid = Guid.Parse(id);
             var worker = _mapper.Map<Worker>(updatedWorker);
 
-            if (id != worker.Id)
+            if (guid != worker.Id)
                 return BadRequest(
                     new Response { Message = "Url id and request id does not match!", Status = "BadRequest" }
                 );
 
             _context.Entry(worker).State = EntityState.Modified;
+            _context.Entry(worker).Property(x => x.CreatedAt).IsModified = false;
+            _context.Entry(worker).Property(x => x.Online).IsModified = false;
+            
+            DateTime currentDateTime = DateTime.Now;
+            worker.UpdatedAt = currentDateTime;
 
-
-            if (worker.LoginKey != null) worker.LoginKey = CryptoHelper.Encrypt(worker.LoginKey);
+            if (worker.LoginKey != null)
+            {
+                worker.LoginKey = CryptoHelper.Encrypt(worker.LoginKey);
+            }
+            else
+            {
+                _context.Entry(worker).Property(x => x.LoginKey).IsModified = false;
+            }
+            
 
             try
             {
@@ -69,7 +83,7 @@ namespace Beekeeper.Backend.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!WorkerExists(id))
+                if (!WorkerExists(guid))
                     return NotFound();
                 throw;
             }
