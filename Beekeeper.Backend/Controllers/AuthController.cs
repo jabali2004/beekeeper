@@ -123,9 +123,6 @@ namespace Beekeeper.Backend.Controllers
             if (!await _roleManager.RoleExistsAsync(UserRoles.User))
                 await _roleManager.CreateAsync(new IdentityRole(UserRoles.User));
 
-            if (!await _roleManager.RoleExistsAsync(UserRoles.Worker))
-                await _roleManager.CreateAsync(new IdentityRole(UserRoles.Worker));
-
             var user = new ApplicationUser
             {
                 Email = model.Email,

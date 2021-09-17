@@ -25,7 +25,7 @@ namespace Beekeeper.Backend.Models
         public bool Disabled { get; set; } = false;
 
         public List<WorkerConnection> WorkerConnections { get; set; }
-        
+
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
     }
