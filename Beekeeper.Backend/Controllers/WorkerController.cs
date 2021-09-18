@@ -30,7 +30,7 @@ namespace Beekeeper.Backend.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<WorkerDTO>>> GetWorkers()
         {
-            List<Worker> workers = await _context.Workers.ToListAsync();
+            var workers = await _context.Workers.ToListAsync();
 
             return Ok(_mapper.Map<List<WorkerDTO>>(workers));
         }
@@ -40,7 +40,7 @@ namespace Beekeeper.Backend.Controllers
         public async Task<ActionResult<WorkerDTO>> GetWorker(string id, [FromHeader] bool sendLoginKey)
         {
             Console.WriteLine(sendLoginKey.ToString());
-            Guid guid = Guid.Parse(id);
+            var guid = Guid.Parse(id);
             var worker = await _context.Workers.FirstOrDefaultAsync(worker => worker.Id == guid);
 
             if (worker == null) return NotFound();
@@ -55,7 +55,7 @@ namespace Beekeeper.Backend.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult<WorkerDTO>> PutWorker(string id, UpdateWorkerReq updatedWorker)
         {
-            Guid guid = Guid.Parse(id);
+            var guid = Guid.Parse(id);
             var worker = _mapper.Map<Worker>(updatedWorker);
 
             if (guid != worker.Id)
@@ -66,19 +66,15 @@ namespace Beekeeper.Backend.Controllers
             _context.Entry(worker).State = EntityState.Modified;
             _context.Entry(worker).Property(x => x.CreatedAt).IsModified = false;
             _context.Entry(worker).Property(x => x.Online).IsModified = false;
-            
-            DateTime currentDateTime = DateTime.Now;
+
+            var currentDateTime = DateTime.Now;
             worker.UpdatedAt = currentDateTime;
 
             if (worker.LoginKey != null)
-            {
                 worker.LoginKey = CryptoHelper.Encrypt(worker.LoginKey);
-            }
             else
-            {
                 _context.Entry(worker).Property(x => x.LoginKey).IsModified = false;
-            }
-            
+
 
             try
             {
@@ -106,7 +102,7 @@ namespace Beekeeper.Backend.Controllers
             else
                 return BadRequest(new Response { Message = "LoginKey is missing!", Status = "BadRequest" });
 
-            DateTime currentDateTime = DateTime.Now;
+            var currentDateTime = DateTime.Now;
             worker.CreatedAt = currentDateTime;
             worker.UpdatedAt = currentDateTime;
 
@@ -119,8 +115,8 @@ namespace Beekeeper.Backend.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteWorker(string id)
         {
-            Guid guid = Guid.Parse(id);
-            var worker = await _context.Workers.FirstOrDefaultAsync(x => x.Id == guid );
+            var guid = Guid.Parse(id);
+            var worker = await _context.Workers.FirstOrDefaultAsync(x => x.Id == guid);
             if (worker == null) return NotFound();
 
             _context.Workers.Remove(worker);

@@ -1,5 +1,4 @@
 using System;
-using Beekeeper.Backend.Models;
 
 namespace Beekeeper.Backend.Data.DTOs
 {

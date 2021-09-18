@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Beekeeper.Backend.Data.DTOs
+﻿namespace Beekeeper.Backend.Data.DTOs
 {
     public class UserDTO
     {
