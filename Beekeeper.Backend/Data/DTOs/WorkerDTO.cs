@@ -5,7 +5,7 @@ namespace Beekeeper.Backend.Data.DTOs
 {
     public class WorkerDTO
     {
-        public Guid Id { get; set; }
+        public string Id { get; set; }
 
         public string Name { get; set; }
         public string Description { get; set; }

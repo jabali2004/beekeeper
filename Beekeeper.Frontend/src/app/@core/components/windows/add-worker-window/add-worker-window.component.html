@@ -1,0 +1,30 @@
+<form [formGroup]="formGroup">
+  <div class="">
+    <nb-form-field>
+      <label class="label" for="name">Name:</label>
+      <input #name id="name" nbInput formControlName="name">
+    </nb-form-field>
+
+    <nb-form-field class="mt-4">
+      <label class="label" for="description">Beschreibung:</label>
+      <input id="description" nbInput formControlName="description">
+    </nb-form-field>
+
+    <nb-form-field class="mt-4">
+      <label class="label" for="loginkey">LoginKey:</label>
+      <input id="loginkey" nbInput formControlName="loginKey">
+    </nb-form-field>
+
+    <nb-form-field class="mt-4">
+      <label class="label" for="address">Adresse:</label>
+      <input id="address" nbInput formControlName="address">
+    </nb-form-field>
+
+    <nb-toggle class="mt-4" status="danger" formControlName="disabled">Deaktivieren</nb-toggle>
+  </div>
+
+  <div class="mt-2">
+    <button nbButton status="success" (click)="save()" class="me-2">Speichern</button>
+    <button nbButton status="primary" (click)="cancel()">Abbrechen</button>
+  </div>
+</form>

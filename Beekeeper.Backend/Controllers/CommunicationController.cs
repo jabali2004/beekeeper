@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Net.Mime;
 using System.Security.Claims;
 using System.Text;
@@ -45,30 +44,30 @@ namespace Beekeeper.Backend.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> Login([FromBody] WorkerAuthReq req)
         {
-            Guid id = Guid.Parse(req.Id);
+            var id = Guid.Parse(req.Id);
             var worker = await _context.Workers.FirstOrDefaultAsync(worker => worker.Id == id);
-            
-            string clientIp = Request.HttpContext.Connection.RemoteIpAddress?.ToString();
-            DateTime currentDateTime = DateTime.Now;
 
-            WorkerConnection newConnection = new WorkerConnection
+            var clientIp = Request.HttpContext.Connection.RemoteIpAddress?.ToString();
+            var currentDateTime = DateTime.Now;
+
+            var newConnection = new WorkerConnection
             {
                 Worker = worker,
                 Address = clientIp,
                 Failed = false,
                 ConnectedAt = currentDateTime
             };
-            
+
             if (worker != null && req.LoginKey == CryptoHelper.Decrypt(worker.LoginKey))
             {
                 var authClaims = new List<Claim>
                 {
-                    new Claim(ClaimTypes.Role, WorkerRoles.Worker),
-                    new Claim(ClaimTypes.NameIdentifier, worker.Id.ToString())
+                    new(ClaimTypes.Role, WorkerRoles.Worker),
+                    new(ClaimTypes.NameIdentifier, worker.Id.ToString())
                 };
 
                 var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
-                
+
 
                 var token = new JwtSecurityToken(
                     _configuration["JWT:ValidIssuer"],
@@ -77,7 +76,7 @@ namespace Beekeeper.Backend.Controllers
                     claims: authClaims,
                     signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
                 );
-                
+
                 await _context.WorkerConnections.AddAsync(newConnection);
                 await _context.SaveChangesAsync();
 

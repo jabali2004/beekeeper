@@ -37,12 +37,15 @@ namespace Beekeeper.Backend.Controllers
 
         // GET: api/Worker/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<WorkerDTO>> GetWorker(string id)
+        public async Task<ActionResult<WorkerDTO>> GetWorker(string id, [FromHeader] bool sendLoginKey)
         {
+            Console.WriteLine(sendLoginKey.ToString());
             Guid guid = Guid.Parse(id);
             var worker = await _context.Workers.FirstOrDefaultAsync(worker => worker.Id == guid);
 
             if (worker == null) return NotFound();
+
+            worker.LoginKey = sendLoginKey ? CryptoHelper.Decrypt(worker.LoginKey) : null;
 
             return Ok(_mapper.Map<WorkerDTO>(worker));
         }
@@ -114,9 +117,10 @@ namespace Beekeeper.Backend.Controllers
 
         // DELETE: api/Worker/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteWorker(Guid Id)
+        public async Task<ActionResult> DeleteWorker(string id)
         {
-            var worker = await _context.Workers.FindAsync(new Worker { Id = Id });
+            Guid guid = Guid.Parse(id);
+            var worker = await _context.Workers.FirstOrDefaultAsync(x => x.Id == guid );
             if (worker == null) return NotFound();
 
             _context.Workers.Remove(worker);

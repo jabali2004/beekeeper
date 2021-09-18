@@ -18,6 +18,7 @@ import { MatInputModule } from '@angular/material/input';
 import { TranslateModule } from '@ngx-translate/core';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { ComponentsModule } from 'src/app/@core/components/components.module';
 
 @NgModule({
   declarations: [WorkersComponent],

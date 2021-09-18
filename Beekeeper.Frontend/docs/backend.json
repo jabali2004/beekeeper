@@ -250,6 +250,47 @@
         }
       }
     },
+    "/api/communication/authenticate": {
+      "post": {
+        "tags": [
+          "Communication"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WorkerAuthReq"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/worker": {
       "get": {
         "tags": [
@@ -345,8 +386,14 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string",
-              "format": "uuid"
+              "type": "string"
+            }
+          },
+          {
+            "name": "sendLoginKey",
+            "in": "header",
+            "schema": {
+              "type": "boolean"
             }
           }
         ],
@@ -383,8 +430,7 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string",
-              "format": "uuid"
+              "type": "string"
             }
           }
         ],
@@ -436,12 +482,11 @@
         ],
         "parameters": [
           {
-            "name": "Id",
+            "name": "id",
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string",
-              "format": "uuid"
+              "type": "string"
             }
           }
         ],
@@ -625,7 +670,7 @@
         "properties": {
           "id": {
             "type": "string",
-            "format": "uuid"
+            "nullable": true
           },
           "name": {
             "type": "string",
@@ -654,7 +699,7 @@
         "properties": {
           "id": {
             "type": "string",
-            "format": "uuid"
+            "nullable": true
           },
           "userName": {
             "type": "string",
@@ -674,78 +719,18 @@
         },
         "additionalProperties": false
       },
-      "Worker": {
+      "WorkerAuthReq": {
         "required": [
-          "loginKey",
-          "name"
+          "id",
+          "loginKey"
         ],
         "type": "object",
         "properties": {
           "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "name": {
             "type": "string"
-          },
-          "description": {
-            "type": "string",
-            "nullable": true
           },
           "loginKey": {
             "type": "string"
-          },
-          "address": {
-            "type": "string",
-            "nullable": true
-          },
-          "online": {
-            "type": "boolean"
-          },
-          "disabled": {
-            "type": "boolean"
-          },
-          "workerConnections": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/WorkerConnection"
-            },
-            "nullable": true
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updatedAt": {
-            "type": "string",
-            "format": "date-time"
-          }
-        },
-        "additionalProperties": false
-      },
-      "WorkerConnection": {
-        "required": [
-          "worker"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "worker": {
-            "$ref": "#/components/schemas/Worker"
-          },
-          "address": {
-            "type": "string",
-            "nullable": true
-          },
-          "failed": {
-            "type": "boolean"
-          },
-          "connectedAt": {
-            "type": "string",
-            "format": "date-time"
           }
         },
         "additionalProperties": false
@@ -755,10 +740,10 @@
         "properties": {
           "id": {
             "type": "string",
-            "format": "uuid"
+            "nullable": true
           },
           "worker": {
-            "$ref": "#/components/schemas/Worker"
+            "$ref": "#/components/schemas/WorkerDTO"
           },
           "address": {
             "type": "string",
@@ -779,7 +764,7 @@
         "properties": {
           "id": {
             "type": "string",
-            "format": "uuid"
+            "nullable": true
           },
           "name": {
             "type": "string",

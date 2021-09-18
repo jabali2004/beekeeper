@@ -15,14 +15,17 @@ import {
   NbFormFieldModule,
   NbActionsModule,
   NbUserModule,
-  NbContextMenuModule
+  NbContextMenuModule,
+  NbWindowModule
 } from '@nebular/theme';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AbstractDialogComponent } from './dialogs/abstract-dialog/abstract-dialog.component';
+import { AddWorkerWindowComponent } from './windows/add-worker-window/add-worker-window.component';
+import { EditWorkerWindowComponent } from './windows/edit-worker-window/edit-worker-window.component';
 
 @NgModule({
-  declarations: [AbstractDialogComponent],
+  declarations: [AbstractDialogComponent, AddWorkerWindowComponent, EditWorkerWindowComponent],
   imports: [
     CommonModule,
     NbCardModule,
@@ -42,9 +45,10 @@ import { AbstractDialogComponent } from './dialogs/abstract-dialog/abstract-dial
     NbActionsModule,
     NbUserModule,
     NbContextMenuModule,
-    NbFormFieldModule
+    NbFormFieldModule,
+    NbWindowModule
   ],
-  exports: [AbstractDialogComponent],
+  exports: [AbstractDialogComponent, AddWorkerWindowComponent],
   entryComponents: []
 })
 export class ComponentsModule {}

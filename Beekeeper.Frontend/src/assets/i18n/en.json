@@ -121,12 +121,6 @@
             "required_message": "Password confirmation is required!"
           },
           "userName": {
-            "label": "",
-            "min_length_message": "",
-            "placeholder": "",
-            "required_message": ""
-          },
-          "username": {
             "label": "Username:",
             "min_length_message": "Username should contain from {{min}} to {{max}} characters",
             "placeholder": "Username",
