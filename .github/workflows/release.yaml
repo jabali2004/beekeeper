@@ -65,7 +65,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ github.event.inputs.versionName }}
+          tags: jabali2004/beekeeper:v${{ github.event.inputs.versionName }},jabali2004/beekeeper:latest
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
