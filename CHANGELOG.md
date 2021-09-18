@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.0.2 (2021-09-18)
+
+
+### Bug Fixes
+
+* docker build ([be619c1](https://github.com/jabali2004/beekeeper/commit/be619c1111fa9442eb5977273f18650cec8748ef))
+
 ## 1.0.0 (2021-09-18)
 
 
