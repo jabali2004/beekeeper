@@ -182,9 +182,10 @@ namespace Beekeeper.Backend
                 app.Use(async (context, next) =>
                 {
                     await next();
-                    if (context.Response.StatusCode == 404 &&
+                    if (context.Request.Path.Value != null && context.Response.StatusCode == 404 &&
                         !Path.HasExtension(context.Request.Path.Value) &&
-                        !context.Request.Path.Value.StartsWith("/api/"))
+                        !context.Request.Path.Value.StartsWith("/api/") &&
+                        !context.Request.Path.Value.StartsWith("/graphql/"))
                     {
                         context.Request.Path = "/index.html";
                         await next();

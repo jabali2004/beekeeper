@@ -10,7 +10,7 @@ import { environment } from 'src/environments/environment';
 
 const uri = !environment.production
   ? environment.GRAPHQL_BASE_PATH
-  : window.location.origin;
+  : window.location.origin + '/graphql/';
 
 export function createApollo(httpLink: HttpLink): ApolloClientOptions<any> {
   return {
