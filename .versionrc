@@ -1,0 +1,45 @@
+{
+    "types": [
+        {
+            "type": "feat",
+            "section": "Features",
+            "hidden": false
+        },
+        {
+            "type": "fix",
+            "section": "Bug Fixes",
+            "hidden": false
+        },
+        {
+            "type": "chore",
+            "section": "Chores",
+            "hidden": false
+        },
+        {
+            "type": "docs",
+            "hidden": false
+        },
+        {
+            "type": "style",
+            "hidden": false
+        },
+        {
+            "type": "refactor",
+            "hidden": false
+        },
+        {
+            "type": "perf",
+            "hidden": false
+        },
+        {
+            "type": "test",
+            "hidden": true
+        }
+    ],
+    "bumpFiles": [
+        {
+            "filename": "Beeleeper.Frontend/package.json",
+            "type": "json"
+        }
+    ]
+}

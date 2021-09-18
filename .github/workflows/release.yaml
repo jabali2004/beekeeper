@@ -1,0 +1,77 @@
+name: release
+on:
+  workflow_dispatch:
+    inputs:
+      versionName:
+        description: "Name of version  (ie 5.5.0)"
+        required: true
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v2.4.0
+        with:
+          node-version: 14.x
+      - name: Install global deps
+        run: |
+          npm install -g standard-version
+      - name: Install .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 5.0.x
+      - name: Install dotnet versionName
+        run: dotnet tool install -g dotnet-version-cli
+      - name: Create release branch
+        run: git checkout -b release/v${{ github.event.inputs.versionName }}
+      - name: Initialize mandatory git config
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Update dotnet backend project version
+        run: cd Beekeeper.Backend && dotnet version --skip-vcs  "${{ github.event.inputs.versionName }}"
+      - name: Update dotnet worker project version
+        run: cd Beekeeper.Worker && dotnet version --skip-vcs  "${{ github.event.inputs.versionName }}"
+      - name: Update Changelog
+        run: standard-version --release-as v${{ github.event.inputs.versionName }} --skip.commit
+      - name: Stage files
+        run: git add .
+      - name: Commit files
+        run: git commit -m "chore(release):${{ github.event.inputs.versionName }}"
+      - name: Push new branch
+        run: git push origin release/v${{ github.event.inputs.versionName }}
+      - name: Create pull request into main
+        uses: thomaseizinger/create-pull-request@1.2.1
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          head: release/v${{ github.event.inputs.versionName }}
+          base: main
+          title: v${{ github.event.inputs.versionName }} into main
+          reviewers: ${{ github.event.issue.user.login }}
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          tags: ${{ github.event.inputs.versionName }}
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ github.event.inputs.versionName }}
+          release_name: Release v${{ github.event.inputs.versionName }}
+          draft: false
+          prerelease: true
