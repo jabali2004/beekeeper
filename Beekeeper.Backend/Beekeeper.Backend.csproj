@@ -9,50 +9,50 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="AutoMapper.EF6" Version="2.1.1" />
-        <PackageReference Include="Hangfire" Version="1.7.25" />
-        <PackageReference Include="Hangfire.AspNetCore" Version="1.7.25" />
-        <PackageReference Include="Hangfire.MySqlStorage" Version="2.0.3" />
-        <PackageReference Include="Hangfire.SqlServer" Version="1.7.25" />
-        <PackageReference Include="HotChocolate" Version="11.3.7" />
-        <PackageReference Include="HotChocolate.AspNetCore" Version="11.3.7" />
-        <PackageReference Include="HotChocolate.AspNetCore.Abstractions" Version="10.5.5" />
-        <PackageReference Include="HotChocolate.AspNetCore.Playground" Version="10.5.5" />
-        <PackageReference Include="HotChocolate.Data" Version="11.3.7" />
-        <PackageReference Include="HotChocolate.Data.EntityFramework" Version="11.3.7" />
-        <PackageReference Include="HotChocolate.Types.CursorPagination" Version="11.3.7" />
-        <PackageReference Include="HotChocolate.Types.Filters" Version="11.3.7" />
-        <PackageReference Include="HotChocolate.Types.OffsetPagination" Version="11.3.7" />
-        <PackageReference Include="HotChocolate.Types.Selections" Version="10.5.5" />
-        <PackageReference Include="HotChocolate.Types.Sorting" Version="11.3.7" />
-        <PackageReference Include="HotChocolate.Utilities" Version="11.3.7" />
-        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.10" />
-        <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.10" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.10" />
+        <PackageReference Include="AutoMapper.EF6" Version="2.1.1"/>
+        <PackageReference Include="Hangfire" Version="1.7.25"/>
+        <PackageReference Include="Hangfire.AspNetCore" Version="1.7.25"/>
+        <PackageReference Include="Hangfire.MySqlStorage" Version="2.0.3"/>
+        <PackageReference Include="Hangfire.SqlServer" Version="1.7.25"/>
+        <PackageReference Include="HotChocolate" Version="11.3.7"/>
+        <PackageReference Include="HotChocolate.AspNetCore" Version="11.3.7"/>
+        <PackageReference Include="HotChocolate.AspNetCore.Abstractions" Version="10.5.5"/>
+        <PackageReference Include="HotChocolate.AspNetCore.Playground" Version="10.5.5"/>
+        <PackageReference Include="HotChocolate.Data" Version="11.3.7"/>
+        <PackageReference Include="HotChocolate.Data.EntityFramework" Version="11.3.7"/>
+        <PackageReference Include="HotChocolate.Types.CursorPagination" Version="11.3.7"/>
+        <PackageReference Include="HotChocolate.Types.Filters" Version="11.3.7"/>
+        <PackageReference Include="HotChocolate.Types.OffsetPagination" Version="11.3.7"/>
+        <PackageReference Include="HotChocolate.Types.Selections" Version="10.5.5"/>
+        <PackageReference Include="HotChocolate.Types.Sorting" Version="11.3.7"/>
+        <PackageReference Include="HotChocolate.Utilities" Version="11.3.7"/>
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.10"/>
+        <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.10"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.10"/>
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.10">
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.10" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.10" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.10"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.10"/>
         <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.10">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="5.0.10" />
-        <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.12.2" />
-        <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.11.1" />
-        <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
-        <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="5.0.1" />
-        <PackageReference Include="Serilog.AspNetCore" Version="4.1.0" />
-        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.1" />
-        <PackageReference Include="System.Security.Cryptography.X509Certificates" Version="4.3.2" />
+        <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="5.0.10"/>
+        <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.12.2"/>
+        <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.11.1"/>
+        <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2"/>
+        <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="5.0.1"/>
+        <PackageReference Include="Serilog.AspNetCore" Version="4.1.0"/>
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.1"/>
+        <PackageReference Include="System.Security.Cryptography.X509Certificates" Version="4.3.2"/>
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="Migrations" />
-        <Folder Include="Controllers" />
-        <Folder Include="Services" />
+        <Folder Include="Migrations"/>
+        <Folder Include="Controllers"/>
+        <Folder Include="Services"/>
     </ItemGroup>
 
 </Project>
