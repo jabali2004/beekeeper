@@ -1,0 +1,35 @@
+version: '3'
+services:
+  web:
+    container_name: beekeeper_web
+    image: jabali2004/beekeeper:latest
+    ports:
+      - '5001:443'
+      - '5000:80'
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ConnectionStrings__DefaultConnection: 'server=db;database=beekeeper;user=root;password=<PASSWORD>;'
+      Crypto__Iv: '<16 chars long>'
+      Crypto__Key: '<CRYPTO KEY>'
+      JWT__Secret: '<JWT SECRET>'
+    depends_on:
+      - db
+  db:
+    container_name: beekeeper_db
+    image: mariadb:latest
+    tty: true
+    ports:
+      - '3307:3306'
+    volumes:
+      - db:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: <PASSWORD>
+      MYSQL_DATABASE: beekeeper
+    healthcheck:
+      # so doesn't start php before db is running
+      test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost']
+      timeout: 20s
+      retries: 10
+
+volumes:
+  db:
