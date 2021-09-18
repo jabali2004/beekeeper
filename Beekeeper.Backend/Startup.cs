@@ -213,7 +213,8 @@ namespace Beekeeper.Backend
                 endpoints.MapGraphQL();
             });
 
-            // InitializeDatabase(app);
+            if (env.IsProduction())
+                InitializeDatabase(app);
         }
 
         private void InitializeDatabase(IApplicationBuilder app)
