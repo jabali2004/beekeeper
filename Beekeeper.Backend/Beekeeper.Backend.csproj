@@ -6,7 +6,7 @@
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
         <AssemblyName>Beekeeper.Backend</AssemblyName>
         <RootNamespace>Beekeeper.Backend</RootNamespace>
-    <Version>0.0.2</Version></PropertyGroup>
+    <Version>0.0.3</Version></PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="AutoMapper.EF6" Version="2.1.1" />
