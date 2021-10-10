@@ -4,9 +4,7 @@ WORKDIR /codegen/
 RUN apk update && \
   apk add --update nodejs
 COPY . .
-RUN node ./openapi/before-fix.js
 RUN java -jar ./openapi/openapi-generator-cli.jar generate -g typescript-angular -o ./src/app/api_client -c ./openapi/swagger-codegen-cli.cfg.json -t ./openapi/templates -i ./docs/backend.json --skip-validate-spec
-RUN node ./openapi/after-fix.js
 # build stage
 FROM node:lts-alpine as build-stage
 WORKDIR /app/
