@@ -18,7 +18,7 @@ jobs:
         run: |
           npm install -g standard-version
       - name: Install .NET Core
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@v2
         with:
           dotnet-version: 5.0.x
       - name: Install dotnet versionName
